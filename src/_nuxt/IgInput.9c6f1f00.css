@@ -1,0 +1,19 @@
+.error input[data-v-a158f60f],.error textarea[data-v-a158f60f] {
+    border-color: #bd4063!important
+}
+
+.success input[data-v-a158f60f],.success textarea[data-v-a158f60f] {
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTciIGhlaWdodD0iMTMiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0ibTEgNiA1IDVMMTYgMSIgc3Ryb2tlPSIjNDBiZGFiIiBzdHJva2Utd2lkdGg9IjIiLz48L3N2Zz4=)!important;
+    background-position-x: 97%!important;
+    background-position-y: 17px!important;
+    background-repeat: no-repeat!important;
+    border-color: #40bdab!important;
+    transition-property: border
+}
+
+input[data-v-a158f60f]:-webkit-autofill,input[data-v-a158f60f]:-webkit-autofill:active,input[data-v-a158f60f]:-webkit-autofill:focus,input[data-v-a158f60f]:-webkit-autofill:hover {
+    -webkit-text-fill-color: #fff!important;
+    background-clip: content-box!important;
+    background-color: #0d1226!important;
+    -webkit-box-shadow: inset 0 0 0 60px #0d1226!important
+}

@@ -1,0 +1,29 @@
+.otp-input {
+    background-color: #0d1226;
+    border: 1px solid hsla(0,0%,100%,.1);
+    border-radius: 4px;
+    color: #fff;
+    font-size: 20px;
+    height: 50px;
+    margin: 0 10px;
+    padding: 5px;
+    text-align: center;
+    width: 50px
+}
+
+@media screen and (max-width: 599px) {
+    .otp-input {
+        height:40px!important;
+        margin: 0 2px!important;
+        width: 40px!important
+    }
+}
+
+.otp-input.is-complete {
+    border-color: #40bdab
+}
+
+.otp-input::-webkit-inner-spin-button,.otp-input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0
+}

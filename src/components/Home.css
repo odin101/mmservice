@@ -1,0 +1,29 @@
+.overflowHide { 
+
+    overflow-x: hidden !important;
+
+     margin-right:0px;
+     margin-bottom:-16px;
+     margin-left:0px;
+     top:-8px;
+     right:auto;
+     left:0px;
+     width:calc(100% + 0px);
+     padding:8px 0px;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background-color: #2B2E3D;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #171B23;
+    border-radius: 10px;
+  }

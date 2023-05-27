@@ -1,0 +1,122 @@
+.custom-filter[data-v-b4871bb2] {
+    background: 0 0;
+    border: 1px solid hsla(0,0%,100%,.3);
+    border-radius: 6px;
+    color: #fff;
+    font-size: 14px;
+    max-width: 200px;
+    outline: none;
+    padding: 8px 20px;
+    transition-duration: .3s;
+    width: 100%
+}
+
+.custom-filter[data-v-b4871bb2]:focus {
+    border-color: #ffa300
+}
+
+.custom-filter.flat[data-v-b4871bb2] {
+    border: 0;
+    padding: 5px 0
+}
+
+.custom-filter[data-v-b4871bb2]::-moz-placeholder {
+    color: #fff;
+    font-size: 14px;
+    font-weight: 400
+}
+
+.custom-filter[data-v-b4871bb2]::placeholder {
+    color: #fff;
+    font-size: 14px;
+    font-weight: 400
+}
+
+.custom-filter[data-v-32dcd57c] {
+    background: 0 0;
+    border: 1px solid hsla(0,0%,100%,.3);
+    border-radius: 6px;
+    color: #fff;
+    font-size: 14px;
+    outline: none;
+    padding: 8px 20px;
+    transition-duration: .3s;
+    width: 100%
+}
+
+.custom-filter[data-v-32dcd57c]:focus {
+    border-color: #ffa300
+}
+
+.custom-filter.flat[data-v-32dcd57c] {
+    border: 0;
+    padding: 5px 0
+}
+
+.custom-filter[data-v-32dcd57c]::-moz-placeholder {
+    color: #fff;
+    font-size: 14px;
+    font-weight: 400
+}
+
+.custom-filter[data-v-32dcd57c]::placeholder {
+    color: #fff;
+    font-size: 14px;
+    font-weight: 400
+}
+
+[data-v-32dcd57c] .filter-select {
+    --ms-py: 8px;
+    --ms-px: 20px;
+    --ms-radius: 6px;
+    --ms-border-width: 1px;
+    --ms-border-width-active: 1px;
+    --ms-border-color: hsla(0,0%,100%,.3);
+    --ms-tag-bg: #1f2332;
+    --ms-tag-color: #fff;
+    --ms-dropdown-bg: #1f2332;
+    --ms-dropdown-border-width: 1px;
+    --ms-dropdown-radius: 6px;
+    --ms-dropdown-border-color: hsla(0,0%,100%,.3);
+    --ms-placeholder-color: #fff;
+    --ms-bg: transparent;
+    --ms-bg-disabled: transparent;
+    --ms-option-color-pointed: #fff;
+    --ms-option-bg-pointed: hsla(0,0%,100%,.05);
+    --ms-option-bg-selected: hsla(0,0%,100%,.1);
+    --ms-option-color-selected: #fff;
+    --ms-option-bg-selected-pointed: hsla(0,0%,100%,.1);
+    --ms-option-color-selected-pointed: #fff;
+    --ms-caret-color: #fff;
+    --ms-font-size: 14px;
+    box-shadow: none;
+    color: #ffffffb3;
+    min-width: 200px
+}
+
+[data-v-32dcd57c] .filter-select .multiselect-tags-search {
+    background: 0 0
+}
+
+[data-v-32dcd57c] .filter-select .multiselect-placeholder {
+    white-space: nowrap
+}
+
+[data-v-32dcd57c] .filter-select.is-open {
+    --ms-radius: 6px
+}
+
+[data-v-32dcd57c] .filter-select.is-open .multiselect-dropdown {
+    border: 0 solid hsla(0,0%,100%,.3);
+    box-shadow: 0 4px 87px #000000b3
+}
+
+[data-v-32dcd57c] .filter-select.flat {
+    border: none
+}
+
+@media screen and (max-width: 1023px) {
+    [data-v-32dcd57c] .filter-select.flat {
+        min-width:170px
+    }
+}

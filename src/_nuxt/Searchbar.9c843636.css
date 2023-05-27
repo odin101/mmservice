@@ -1,0 +1,6 @@
+@media(hover) and (pointer: fine) {
+    .hover[data-v-d9e45827]:hover {
+        background:#393d4a;
+        color: #ffa300
+    }
+}

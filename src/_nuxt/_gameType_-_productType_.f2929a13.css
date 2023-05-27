@@ -1,0 +1,58 @@
+.service-tab[data-v-d5ff87d0] {
+    border-radius: 50px;
+    margin: 0 1px
+}
+
+.service-tab.active[data-v-d5ff87d0],.service-tab[data-v-d5ff87d0]:hover {
+    background: #232730;
+    color: #ffa300
+}
+
+[data-v-d5ff87d0] .text-section {
+    color: #ffffffb3;
+    font-size: 15px;
+    line-height: 1.5
+}
+
+[data-v-d5ff87d0] .text-section p {
+    padding: 8px 0
+}
+
+[data-v-d5ff87d0] .text-section ol,[data-v-d5ff87d0] .text-section ul {
+    list-style-type: circle;
+    padding-left: 20px
+}
+
+[data-v-d5ff87d0] .text-section ol li,[data-v-d5ff87d0] .text-section ul li {
+    padding: 5px 0
+}
+
+[data-v-d5ff87d0] .text-section h2 {
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    margin: 10px 0
+}
+
+[data-v-d5ff87d0] .Page {
+    height: 30px;
+    transition-duration: .3s;
+    width: 30px
+}
+
+[data-v-d5ff87d0] .Page:hover {
+    border-color: #ffa300;
+    color: #fff
+}
+
+[data-v-d5ff87d0] .Page-active {
+    background-color: #ffa300!important;
+    border: 0;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700
+}
+
+[data-v-d5ff87d0] .Control-active {
+    fill: #fff
+}

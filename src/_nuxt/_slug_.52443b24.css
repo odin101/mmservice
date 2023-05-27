@@ -1,0 +1,12 @@
+.option-group .option[data-v-20104d86] {
+    border: 3px solid transparent;
+    border-radius: 20px 20px 0 0
+}
+
+.option-group .option.active[data-v-20104d86],.option-group .option[data-v-20104d86]:hover {
+    background: #1f2332;
+    border-left: 2px solid #4f5259;
+    border-right: 3px solid #4f5259;
+    border-top: 2px solid #4f5259;
+    color: #ffa300
+}

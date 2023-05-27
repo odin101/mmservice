@@ -1,0 +1,10 @@
+.chat .message.sent[data-v-5d55811e] {
+    background: #294b9d;
+    border-radius: 15px 15px 0;
+}
+
+.chat .message[data-v-5d55811e] {
+    background: rgba(41,75,157,.21);
+    border-radius: 15px 15px 15px 0;
+    padding: 15px 18px;
+}

@@ -1,0 +1,19 @@
+.attribute {
+    background: rgba(55,114,255,.15);
+    border-radius: 13px
+}
+
+.rating-group :first-child {
+    font-size: 20px
+}
+
+.rating-group :last-child {
+    color: #fff9;
+    font-size: 12px
+}
+
+.rating-group .blue-line {
+    background: #3772ff;
+    border-radius: 100px;
+    height: 4px
+}

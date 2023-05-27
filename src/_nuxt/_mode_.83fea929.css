@@ -1,0 +1,27 @@
+.option-wrapper[data-v-17f5e6a2] {
+    border: 2px solid transparent;
+    border-radius: 20px 20px 0 0;
+    cursor: pointer;
+    gap: 7px
+}
+
+.option-wrapper[data-v-17f5e6a2] :first-child {
+    color: #fffc;
+    font-size: 16px;
+    font-weight: 800
+}
+
+.option-wrapper[data-v-17f5e6a2] :last-child {
+    color: #fff9;
+    font-size: 14px;
+    font-weight: 400
+}
+
+.option-wrapper.active[data-v-17f5e6a2],.option-wrapper[data-v-17f5e6a2]:hover {
+    background: #182138;
+    border: 2px solid #282c3f
+}
+
+.option-wrapper.active span[data-v-17f5e6a2],.option-wrapper:hover span[data-v-17f5e6a2] {
+    color: #ffa300
+}

@@ -1,0 +1,22 @@
+label input[type=checkbox][data-v-6ad32518] {
+    display: none
+}
+
+label input[type=checkbox]:checked+.checker[data-v-6ad32518] {
+    background-position: 100%
+}
+
+label .checker[data-v-6ad32518] {
+    background-image: url(../img/checkbox.png);
+    background-position: 0;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+    height: 20px;
+    margin: 5px 5px 5px 0;
+    min-width: 20px;
+    width: 20px
+}
+
+label.error .checkbox-label[data-v-6ad32518] {
+    color: red
+}

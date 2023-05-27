@@ -1,0 +1,54 @@
+.btn[data-v-1fb46fc5] {
+    background-color: #ffa300;
+    border: 2px solid transparent;
+    border-radius: 60px;
+    color: #171d29;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: .3px;
+    line-height: 20px;
+    padding: 12px 20px;
+    text-transform: none;
+    transition-duration: .3s
+}
+
+@media(hover) and (pointer: fine) {
+    .btn[data-v-1fb46fc5]:hover {
+        background-color:#c17c00;
+        color: #171d29
+    }
+}
+
+.btn.secondary[data-v-1fb46fc5] {
+    background-color: transparent;
+    background: rgba(255,163,0,.1);
+    color: #ffa300
+}
+
+@media(hover) and (pointer: fine) {
+    .btn.secondary[data-v-1fb46fc5]:hover {
+        background-color:#ffa300;
+        color: #171d29
+    }
+}
+
+.btn.success[data-v-1fb46fc5] {
+    background-color: #76be2a;
+    color: #fff
+}
+
+@media(hover) and (pointer: fine) {
+    .btn.success[data-v-1fb46fc5]:hover {
+        background-color:#76be2a
+    }
+}
+
+.btn.wide[data-v-1fb46fc5] {
+    padding: 12px 30px!important
+}
+
+@media screen and (max-width: 599px) {
+    .btn.wide[data-v-1fb46fc5] {
+        padding:12px 10px!important
+    }
+}

@@ -1,0 +1,31 @@
+.arrow[data-v-82196624] {
+    border-left: 2px solid #fff;
+    border-top: 2px solid #fff;
+    display: inline-block;
+    height: 8px;
+    width: 8px
+}
+
+.arrow.left[data-v-82196624] {
+    margin-left: 4px;
+    transform: rotate(-45deg)
+}
+
+.arrow.left.double[data-v-82196624] {
+    margin-left: 2px;
+    margin-right: -2px
+}
+
+.arrow.right[data-v-82196624] {
+    margin-right: 2px;
+    transform: rotate(135deg)
+}
+
+.arrow.right.double[data-v-82196624] {
+    margin-right: 0
+}
+
+.arrow.double[data-v-82196624] {
+    height: 6px;
+    width: 6px
+}

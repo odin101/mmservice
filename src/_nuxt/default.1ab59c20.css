@@ -1,0 +1,30 @@
+.scrollDown[data-v-5315b842] {
+    opacity: 0;
+    z-index: -1!important
+}
+
+.scrollDown.showHeader[data-v-5315b842] {
+    opacity: 1!important;
+    z-index: 300!important
+}
+
+.header[data-v-5315b842] {
+    height: 90px
+}
+
+@media screen and (max-width: 1023px) {
+    .header[data-v-5315b842] {
+        height:60px
+    }
+}
+
+.main-wrapper[data-v-9f5b85b4] {
+    min-height: 100vh;
+    padding-top: 90px
+}
+
+@media screen and (max-width: 1023px) {
+    .main-wrapper[data-v-9f5b85b4] {
+        padding-top:60px
+    }
+}

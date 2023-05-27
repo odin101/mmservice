@@ -1,0 +1,30 @@
+.gradient[data-v-f6451ad8] {
+    left: calc(100vh - 600px);
+    top: -100px
+}
+
+@media(max-width: 599px) {
+    .gradient[data-v-f6451ad8] {
+        height:265px;
+        top: -365px
+    }
+}
+
+.main-img[data-v-f6451ad8] {
+    height: 90%;
+    left: 100px
+}
+
+@media(max-width: 1460px) {
+    .main-img[data-v-f6451ad8] {
+        left:-150px
+    }
+}
+
+@media(max-width: 599px) {
+    .main-img[data-v-f6451ad8] {
+        height:auto;
+        left: 0;
+        max-width: 140%
+    }
+}

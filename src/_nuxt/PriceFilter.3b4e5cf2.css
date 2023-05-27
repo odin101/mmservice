@@ -1,0 +1,33 @@
+.custom-filter[data-v-ef7bcce7] {
+    background: 0 0;
+    border: 1px solid hsla(0,0%,100%,.3);
+    border-radius: 6px;
+    color: #fff;
+    font-size: 14px;
+    max-width: 150px;
+    outline: none;
+    padding: 8px 20px;
+    transition-duration: .3s;
+    width: 100%
+}
+
+.custom-filter[data-v-ef7bcce7]:focus {
+    border-color: #ffa300
+}
+
+.custom-filter.flat[data-v-ef7bcce7] {
+    border: 0;
+    padding: 5px 0
+}
+
+.custom-filter[data-v-ef7bcce7]::-moz-placeholder {
+    color: #fff;
+    font-size: 14px;
+    font-weight: 400
+}
+
+.custom-filter[data-v-ef7bcce7]::placeholder {
+    color: #fff;
+    font-size: 14px;
+    font-weight: 400
+}

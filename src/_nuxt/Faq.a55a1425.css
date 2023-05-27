@@ -1,0 +1,14 @@
+.contact-box[data-v-82610a80] {
+    background: #1f2332;
+    border-radius: 20px;
+    max-width: 100%;
+    padding: 25px
+}
+
+.contact-box[data-v-82610a80] ul {
+    padding: 20px
+}
+
+.contact-box[data-v-82610a80] ul li {
+    list-style-type: disc
+}

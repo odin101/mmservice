@@ -1,0 +1,5 @@
+@media screen and (max-width: 1023px) {
+    [data-v-377cfd5d] .filter-select .multiselect-placeholder,[data-v-377cfd5d] .filter-select .multiselect-single-label {
+        padding-left:0
+    }
+}

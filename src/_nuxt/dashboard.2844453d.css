@@ -1,0 +1,38 @@
+.header[data-v-36ae94da] {
+    color: #8c8f96;
+    font-size: 16px;
+    font-weight: 700;
+    transition-duration: .3s
+}
+
+.header.active[data-v-36ae94da],.header[data-v-36ae94da]:hover {
+    color: #fff
+}
+
+.header.active svg path[data-v-36ae94da] {
+    fill: #fff;
+    stroke: #fff
+}
+
+.header.active svg path.no-stroke[data-v-36ae94da] {
+    stroke: transparent;
+    fill: #fff;
+    fill-opacity: 1
+}
+
+.inactive-link[data-v-36ae94da] {
+    border-left: 2px solid grey;
+    color: #fff;
+    font-size: 14px;
+    padding: 12px 0;
+    transition-duration: .3s
+}
+
+.active-link[data-v-36ae94da],.inactive-link[data-v-36ae94da]:hover {
+    color: #ffa300
+}
+
+.active-link[data-v-36ae94da] {
+    border-color: #ffa300;
+    font-weight: 700
+}

@@ -1,0 +1,8 @@
+.absolutiii {
+    background: rgb(42, 46, 60) !important;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 4px 34px !important;
+    width: 400px !important;
+    margin-left: -200px !important;
+    max-width: 80% !important;
+    position: absolute !important;
+}
