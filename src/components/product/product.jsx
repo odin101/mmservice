@@ -18,7 +18,7 @@ export default function Product() {
  }, [chatModal ]);
   return (
     <>
-    <Checkout />
+    {/* <Checkout /> */}
         <PhotoProvider>
 
     <div data-v-bfa0d376>

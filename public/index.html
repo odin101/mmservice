@@ -48,4 +48,23 @@
 
   </body>
   <script src="//code.tidio.co/pys9c4hplhteaqymyddhmwhqrt4rcfk5.js" async></script>
+  <script>
+if(location.href.includes('/support')) {
+
+ (function () {
+    function onTidioChatApiReady() {
+        window.tidioChatApi.open();
+    }
+    if (window.tidioChatApi) {
+        window.tidioChatApi.on('ready', onTidioChatApiReady);
+    } else {
+        document.addEventListener('tidioChat-ready', onTidioChatApiReady);
+    }
+})();
+
+}else{
+
+    
+}
+  </script>
 </html>

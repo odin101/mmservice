@@ -1,9 +1,14 @@
-import React, {Component} from 'react'
+import React, {Component, useState} from 'react'
 import google from '../img/icons/google.svg'
 import apple from '../img/icons/apple.svg'
 import discord from '../img/icons/discord.svg'
 
+
 const RegModal = (props) => {
+  const [email,setEmail] = useState('')
+  const [password,setPassword] = useState('')
+  const [username,setUsername] = useState('')
+
   return ( <> <div
     onClick={() => props.backClick()}
     className="g-dialog-overlay g-dialog-overlay--active"
@@ -173,9 +178,11 @@ const RegModal = (props) => {
               }}>or</span>
             </div>
             <div className="my-4 text-center">Sign up with Email</div>
-            <form>
               <label data-v-a158f60f className>
-                <div data-v-a158f60f className="opacity-70 text-white mb-2 text-sm">Email address</div><input
+                <div data-v-a158f60f className="opacity-70 text-white mb-2 text-sm">Email address</div>
+                <input
+                 value={email}
+                 onChange={(e) => {setEmail(e.target.value)}}
                   data-v-a158f60f
                   className="w-full outline-none text-white"
                   type="email"
@@ -193,6 +200,8 @@ const RegModal = (props) => {
                     className="w-full outline-none text-white"
                     type="text"
                     placeholder
+                    value={username}
+                    onChange={(e) => {setUsername(e.target.value)}}
                     style={{
     "background": "rgb(13, 18, 38)",
     "border-radius": "14px",
@@ -203,6 +212,8 @@ const RegModal = (props) => {
               <div className="mt-4">
                 <label data-v-a158f60f className>
                   <div data-v-a158f60f className="opacity-70 text-white mb-2 text-sm">Password</div><input
+                    onChange={(e) => {setPassword(e.target.value)}}
+                    value={password}
                     data-v-a158f60f
                     className="w-full outline-none text-white"
                     type="password"
@@ -225,13 +236,16 @@ const RegModal = (props) => {
                   <div data-v-6ad32518>I accept the Terms &amp; Conditions and Privacy Policy</div>
                 </div>
               </label>
-              <button className="w-full" type="submit">
+              <button 
+              onClick={() => {
+                props.submit(username,email,password);
+              }}
+              className="w-full" >
                 <div
                   data-v-1fb46fc5
                   className="btn text-center cursor-pointer my-4 w-full block">Start Trading</div>
               </button>
          
-            </form>
           </div>
         </div>{/**/}</div>{/**/}</div>
   </div> </div>

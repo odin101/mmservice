@@ -1,31 +1,38 @@
-import React, { Component,useEffect } from 'react'
+import React, { Component,useEffect,useState} from 'react'
 import accountIcon from '../../img/icons/account-icon-white.svg'
 import itemIconOrange from '../../img/icons/item-icon-orange.svg'
 import { withSignIn  } from 'react-auth-kit'
 import SingleItem from './singleItem'
 import { useSearchParams } from "react-router-dom";
-
-
+import axios from 'axios'
+import API from '../../config'
 
 
 import {useParams, useNavigate } from 'react-router-dom'
   function Items()  {
 
-    const { page }  = useParams(); // from react-router, this is the `:page` parameter defined on the route. 
+    const { gameName }  = useParams(); // from react-router, this is the `:page` parameter defined on the route. 
     const navigate = useNavigate(); 
     let [searchParams, setSearchParams] = useSearchParams();
-
-
+    const [games, setGames] = useState([]);
+  const [gotData,setGotData] = useState(false)
 
     useEffect(() => {
     // alert(searchParams.get('page'))
-    
+    if(!gotData) {
+      axios.get(API + "/user/getSpecOffers?game="+gameName)
+      .then(res => {
+        setGames([...res.data])
+        setGotData(true)
+      })
+    }
+
     })
 
 
 
-
-
+  
+ 
 
 
     const onSubmit = (e) =>  {
@@ -62,7 +69,6 @@ import {useParams, useNavigate } from 'react-router-dom'
                       <img
                         className="absolute inset-0 w-full h-full object-cover object-top z-0 opacity-30"
                         src="https://assets.igitems.com/files/TmcBPmBGAit6EC2BaBkc7smoctq835JF.jpeg"
-                        alt="Roblox Items"
                       />
                     </picture>
                     <picture className="hidden sm:block">
@@ -74,20 +80,19 @@ import {useParams, useNavigate } from 'react-router-dom'
                       <img
                         className="absolute inset-0 w-full h-full object-cover object-top z-0 opacity-30"
                         src="https://assets.igitems.com/files/K9FGDEJWAQhaKFeSozmEMYKdimdND3d7.jpeg"
-                        alt="Roblox Items"
                       />
                     </picture>
                     <div className="container py-6 relative z-10 sm:py-4">
                       <div className="flex justify-between items-center no-wrap">
                         <div>
                           <h1 className="text-4xl leading-10 tracking-wide font-extrabold mb-6 md:text-xl md:mb-4 md:leading-8">
-                            Roblox Items
+                            {gameName}
                           </h1>
                           <div className="sm:text-sm">
                             {/**/}
                             <h2 className="leading-6 sm:h-12 sm:overflow-clip">
-                              Customize your avatar with rare, but affordable
-                              Roblox items.
+                              Customize your avatar with rare, but affordable 
+                               {" " + gameName}.
                             </h2>
                           </div>
                         </div>
@@ -315,7 +320,13 @@ import {useParams, useNavigate } from 'react-router-dom'
                           className="xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 grid grid-cols-4 gap-2 pt-4"
                           data-v-d5ff87d0=""
                         >
-                          <SingleItem />
+                          {
+                            games.map(gm => {
+                               return(
+                                   <SingleItem data={gm}/>
+                               )
+                            })
+                          }
                         </div>
                         </div>
                                  <div

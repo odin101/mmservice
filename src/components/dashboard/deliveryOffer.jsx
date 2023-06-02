@@ -1,15 +1,34 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import './offer.css'
 
-export default function DeliveryOffer() {
- const [selected,setSelected] = useState(0)
+import MissingImg from '../../img/icons/missingImg.webp'
+import {useAuthUser} from 'react-auth-kit'
 
-// const selectedStyle = {
-//   color:"#ffa300",
-//   border:"1px solid #ffa300"
-// }
+import {ref} from "firebase/storage"
+import {
+  getDownloadURL,
+  uploadBytesResumable 
+} from "firebase/storage";
+import storage from "../../firebaseConfig.js"
+
+export default function DeliveryOffer(props) {
+ const [selected,setSelected] = useState(0)
+ const [detials,setDetails] = useState("")
+const [imageURL,setImageUrl] = useState("")
+
+
+ 
+   const auth = useAuthUser()
  const items = ["Instant","20 mins","2 hours","12 hours","24 hours","48 hours","48 hours+"]
+
+useEffect(() => {
+const storageRef = ref(storage,`/users/${auth()._id}/productImages/${props.allData._id}`)
+    getDownloadURL(storageRef).then(data => {
+     setImageUrl(data)
+   })
+})
+
 
   return (
     <>
@@ -106,7 +125,12 @@ export default function DeliveryOffer() {
             </div>
             <label data-v-a158f60f data-v-52947833 className>
               <div data-v-a158f60f className="opacity-70 text-white mb-2 text-sm" />
-              <textarea data-v-a158f60f className="w-full outline-none text-white" type="textarea" placeholder style={{"background":"rgb(13, 18, 38)","border-radius":"14px","padding":"11px 22px","border":"1px solid transparent","height":"150px"}} defaultValue={""} />
+              <textarea data-v-a158f60f className="w-full outline-none text-white"
+               onChange={(e) => {
+                  setDetails(e.target.value)
+               } }
+               value={detials}
+               type="textarea" placeholder style={{"background":"rgb(13, 18, 38)","border-radius":"14px","padding":"11px 22px","border":"1px solid transparent","height":"150px"}} defaultValue={""} />
               {/**/}
             </label>
           </label>
@@ -120,12 +144,15 @@ export default function DeliveryOffer() {
             <div data-v-530e65a0 className="flex flex-col col-grow relative h-full gap-3 py-5">
               <div data-v-530e65a0 className="flex no-wrap items-center gap-4 px-5">
                 <div data-v-530e65a0 className="rounded-md shrink-0 flex justify-center items-center w-20 h-20 overflow-hidden" style={{"max-width":"80px","background":"rgb(37, 42, 61)"}}>
-                  <img data-v-530e65a0 src="https://assets.igitems.com/files/thumbnail_cyrCf3ggvFB8aDxR92rhND97thrnkJQy.png" format="webp" loading="lazy" fit="cover" position="center" height={80} width={80} />
+                  <img data-v-530e65a0 
+                  src={imageURL}
+                  
+                  format="webp" loading="lazy" fit="cover" position="center" height={80} width={80} />
                 </div>
                 {/**/}
                 <div data-v-530e65a0 className="font-bold leading-6 text-ellipsis overflow-hidden float-left w-full" style={{"height":"70px"}}>
                   {/**/}
-                  <div data-v-530e65a0 className="float-none">test test</div>
+                  <div data-v-530e65a0 className="float-none">{props.allData.title}</div>
                 </div>
               </div>
               <div data-v-530e65a0 className="px-5 overflow-hidden" style={{"max-height":"24px"}}>
@@ -139,19 +166,21 @@ export default function DeliveryOffer() {
                   <div data-v-530e65a0 className="w-4 h-4">
                     <img data-v-530e65a0 src="/img/icons/timer.svg" alt height={16} width={16} />
                   </div>
-                  <div data-v-530e65a0 className="text-xs font-light text-white/70">2 hours</div>
+                  <div data-v-530e65a0 className="text-xs font-light text-white/70">price</div>
                 </div>
-                <div data-v-530e65a0 className="font-bold text-white/80">$42,342.0</div>
+                <div data-v-530e65a0 className="font-bold text-white/80">${props.allData.price}</div>
               </div>
               <div data-v-530e65a0 className="w-full h-px" style={{"background":"rgb(23, 29, 41)"}} />
               <div data-v-530e65a0 className="flex items-center justify-between text-white/70 px-5">
                 <div data-v-530e65a0 className="flex gap-2 items-center relative h-10">
                   <div data-v-530e65a0 className="relative">
                     {/**/}
-                    <img data-v-530e65a0 src="https://assets.igitems.com/files/thumbnail_PYo8eaN7sGBGD4YDM9fZHpHtvtk9DuGh.png" format="webp" loading="lazy" height={36} width={36} alt="Mr Mrodin ODIN" style={{"width":"36px","height":"36px","border-radius":"100%","border":"3px solid rgba(255, 255, 255, 0.12)"}} />
+                    <img data-v-530e65a0 
+                     src={auth().profileImage?auth().profileImage:MissingImg }
+                     format="webp" loading="lazy" height={36} width={36} alt="Mr Mrodin ODIN" style={{"width":"36px","height":"36px","border-radius":"100%","border":"3px solid rgba(255, 255, 255, 0.12)"}} />
                   </div>
                   <div data-v-530e65a0 className="flex flex-col">
-                    <div data-v-530e65a0 className="text-sm">Mr Mrodin ODIN</div>
+                    <div data-v-530e65a0 className="text-sm">{auth().username}</div>
                     <div data-v-530e65a0 className="flex items-center gap-2">
                       {/**/}
                       {/**/}
@@ -166,10 +195,10 @@ export default function DeliveryOffer() {
           </div>
         </a>
         <div className="mt-4">
-          <div>Estimated income: <span className="font-bold text-secondary">$36,414.12</span>
+          <div>Estimated income: <span className="font-bold text-secondary">${props.allData.price-0.9}</span>
           </div>
           <a href="/dashboard/account/Verification" rel="noopener noreferrer" target="_blank">
-            <div className="line-through opacity-70 decoration-secondary decoration-2">Estimated income as Verified: <span className="font-bold text-secondary">$38,531.22</span>
+            <div className="line-through opacity-70 decoration-secondary decoration-2">Estimated income as Verified: <span className="font-bold text-secondary">${props.allData.price}</span>
             </div>
           </a>
         </div>
@@ -177,8 +206,11 @@ export default function DeliveryOffer() {
     </div>
     <div className="flex justify-end my-4 w-full gap-4">
       <div data-v-1fb46fc5 className="btn text-center cursor-pointer secondary">Back</div>
-      {/**/}a
-      <div data-v-1fb46fc5 className="btn text-center cursor-pointer">Save &amp; Continue</div>
+      {/**/}
+      <div
+      
+         onClick={ () => props.next(items[selected],detials)}
+      data-v-1fb46fc5 className="btn text-center cursor-pointer">Save &amp; Continue</div>
     </div>
   </div>
   {/**/}

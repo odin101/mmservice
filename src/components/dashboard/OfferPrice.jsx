@@ -2,10 +2,13 @@ import React, { useState } from 'react';
 import TimerIcon from '../../img/icons/timer.svg'
 import GamerIcon from '../../img/icons/avatar-placeholder.svg'
 
-export default function Details() {
+import MissingImg from '../../img/icons/missingImg.webp'
+import {useAuthUser} from 'react-auth-kit'
+export default function Details(props) {
     // const UnitPrice = 1;
    const [UnitPrice,setUnitPrice] = useState(1)
    const [stockQuantity,setStockQuantity] = useState(1)
+   const auth = useAuthUser()
 
     
 
@@ -125,14 +128,6 @@ export default function Details() {
           <div>You will sell a total of {numberWithCommas(stockQuantity)} item.</div>
         </div>
         <div className="flex-col flex">
-          {/**/}
-          <label data-v-6ad32518 className="flex items-center my-2">
-            <input data-v-6ad32518 type="checkbox" />
-            <div data-v-6ad32518 className="checker inline-block cursor-pointer" />
-            <div data-v-6ad32518 className="checkbox-label cursor-pointer text-sm text-white px-1 leading-5">
-              <div data-v-6ad32518>Provide volume discounts?</div>
-            </div>
-          </label>
         </div>
         {/**/}
         {/**/}
@@ -188,7 +183,7 @@ export default function Details() {
                 <div data-v-530e65a0 className="w-4 h-4">
                   <img data-v-530e65a0 src={TimerIcon} alt height={16} width={16} />
                 </div>
-                <div data-v-530e65a0 className="text-xs font-light text-white/70">Duration</div>
+                <div data-v-530e65a0 className="text-xs font-light text-white/70">price</div>
               </div>
               <div data-v-530e65a0 className="font-bold text-white/80">${numberWithCommas(UnitPrice)}</div>
             </div>
@@ -197,10 +192,14 @@ export default function Details() {
               <div data-v-530e65a0 className="flex gap-2 items-center relative h-10">
                 <div data-v-530e65a0 className="relative">
                   {/**/}
-                  <img data-v-530e65a0 src="https://assets.igitems.com/files/thumbnail_PYo8eaN7sGBGD4YDM9fZHpHtvtk9DuGh.png" format="webp" loading="lazy" height={36} width={36} alt="Mr Mrodin ODIN" style={{"width":"36px","height":"36px","border-radius":"100%","border":"3px solid rgba(255, 255, 255, 0.12)"}} />
+                  <img data-v-530e65a0 
+                src={auth().profileImage?auth().profileImage:MissingImg }
+                   format="webp" loading="lazy" height={36} width={36} alt="Mr Mrodin ODIN" style={{"width":"36px","height":"36px","border-radius":"100%","border":"3px solid rgba(255, 255, 255, 0.12)"}} />
                 </div>
                 <div data-v-530e65a0 className="flex flex-col">
-                  <div data-v-530e65a0 className="text-sm">Mr Mrodin ODIN</div>
+                  <div data-v-530e65a0 className="text-sm">{
+                auth().username
+                  }</div>
                   <div data-v-530e65a0 className="flex items-center gap-2">
                     {/**/}
                     {/**/}
@@ -226,7 +225,9 @@ export default function Details() {
   <div className="flex justify-end my-4 w-full gap-4">
     <div data-v-1fb46fc5 className="btn text-center cursor-pointer secondary">Back</div>
     {/**/}
-    <div data-v-1fb46fc5 className="btn text-center cursor-pointer">Save &amp; Continue</div>
+    <div 
+    onClick={ () => props.next(UnitPrice,stockQuantity)}
+    data-v-1fb46fc5 className="btn text-center cursor-pointer">Save &amp; Continue</div>
   </div>
 </div>
     </>

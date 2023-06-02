@@ -15,6 +15,7 @@ import { useRef } from 'react';
 import MyOffers from './components/dashboard/myOffers';
 import Accounts from './components/dashboard/account';
 import Items from './components/itemsContent/items';
+import Authsuccess from './components/authsuccess';
 
 
 function App() {
@@ -264,6 +265,7 @@ function App() {
           <Route path="/product/:userId" element={<Product />} />
           <Route path="/dashboard/offers" element={<MyOffers />} />
           <Route path="/dashboard/account" element={<Accounts />} />
+          <Route path="/authsuccess/:token" element={<Authsuccess />} />
         </Route>
       </Routes>
 

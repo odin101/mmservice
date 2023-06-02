@@ -5,14 +5,83 @@ import {useDropzone} from 'react-dropzone';
 import UploadModal1 from './uploadModal';
 import DefaultAvatar from '../../img/icons/avatar-placeholder.svg'
 import {isMobile} from 'react-device-detect';
+import MissingImg from '../../img/icons/missingImg.webp'
+import {useAuthUser} from 'react-auth-kit'
+import { useEffect } from 'react';
+import storage from "../../firebaseConfig.js"
+import {ref} from "firebase/storage"
+
+import {
+  getDownloadURL,
+  uploadBytesResumable 
+} from "firebase/storage";
 
 
 
 export const OfferDescreption = (props) => {
- 
+
+   const auth = useAuthUser()
+   const [percent, setPercent] = useState(0);
+
    const [UploadModal,setUploadModal] = useState(false)
    const [photo,setUploadedPhoto] = useState(false)
-   const [title,setTitle] = useState("item name")
+   const [title,setTitle] = useState("")
+   const [desc,setDesc] = useState("")
+  const [hd,setHd] = useState(false)
+  const [PhotoURL,setPhotoUrl] = useState(false)
+
+   useEffect(() => {
+    if(!hd) {
+        if(props?.allData?.desc){
+          setHd(true)
+           setDesc(props?.allData?.desc)
+        }
+    }
+
+
+
+
+
+// const storageRef = ref(storage,`/users/${auth()._id}/productImages/${props.allData._id}`)
+
+//     getDownloadURL(storageRef).then(data => {
+//       alert(data)
+//    })
+
+
+
+   },[desc])
+
+
+   function handleUpload(file) {
+       
+          if (!file) {
+            alert("Please choose a file first!")
+        }
+
+        const storageRef = ref(storage,`/users/${auth()._id}/productImages/${props.allData._id}`)
+        const uploadTask = uploadBytesResumable(storageRef, file);
+
+        uploadTask.on(
+            "state_changed",
+            (snapshot) => {
+                const percent = Math.round(
+                    (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+                );
+
+                // update progress
+                setPercent(percent);
+            },
+            (err) => console.log(err),
+            () => {
+                // download url
+                getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+                props.uploadPhoto(url)
+                });
+            }
+        ); 
+}
+
 
   return (
 <>
@@ -107,8 +176,8 @@ export const OfferDescreption = (props) => {
           {/* <Editor editorState={editorState} onChange={setEditorState} /> */}
             <ReactQuill
                 theme='snow'
-                value={'test'}
-                onChange={()=>{}}
+                value={desc}
+                onChange={(e)=>{ setDesc(e)}}
                 style={{minHeight: '250px',height:250}}
         />
       
@@ -192,17 +261,20 @@ export const OfferDescreption = (props) => {
                 </div>
                 <div data-v-530e65a0 className="text-xs font-light text-white/70">Duration</div>
               </div>
-              <div data-v-530e65a0 className="font-bold text-white/80">$50.0</div>
+              <div data-v-530e65a0 className="font-bold text-white/80">${props.allData.price}</div>
             </div>
             <div data-v-530e65a0 className="w-full h-px" style={{"background":"rgb(23, 29, 41)"}} />
             <div data-v-530e65a0 className="flex items-center justify-between text-white/70 px-5">
               <div data-v-530e65a0 className="flex gap-2 items-center relative h-10">
                 <div data-v-530e65a0 className="relative">
                   {/**/}
-                  <img data-v-530e65a0 src="https://assets.igitems.com/files/thumbnail_PYo8eaN7sGBGD4YDM9fZHpHtvtk9DuGh.png" format="webp" loading="lazy" height={36} width={36} alt="Mr Mrodin ODIN" style={{"width":"36px","height":"36px","border-radius":"100%","border":"3px solid rgba(255, 255, 255, 0.12)"}} />
+                  <img data-v-530e65a0 
+                  
+                src={auth().profileImage?auth().profileImage:MissingImg }
+                  format="webp" loading="lazy" height={36} width={36} alt="Mr Mrodin ODIN" style={{"width":"36px","height":"36px","border-radius":"100%","border":"3px solid rgba(255, 255, 255, 0.12)"}} />
                 </div>
                 <div data-v-530e65a0 className="flex flex-col">
-                  <div data-v-530e65a0 className="text-sm">Mr Mrodin ODIN</div>
+                  <div data-v-530e65a0 className="text-sm">{auth().username}</div>
                   <div data-v-530e65a0 className="flex items-center gap-2">
                     {/**/}
                     {/**/}
@@ -218,10 +290,10 @@ export const OfferDescreption = (props) => {
         </div>
       </a>
       <div className="mt-4">
-        <div>Estimated income: <span className="font-bold text-secondary">$43.0</span>
+        <div>Estimated income: <span className="font-bold text-secondary">${(props.allData.price-0.9).toFixed(2)}</span>
         </div>
         <a href="/dashboard/account/Verification" rel="noopener noreferrer" target="_blank">
-          <div className="line-through opacity-70 decoration-secondary decoration-2">Estimated income as Verified: <span className="font-bold text-secondary">$45.5</span>
+          <div className="line-through opacity-70 decoration-secondary decoration-2">Estimated income as Verified: <span className="font-bold text-secondary">${props.allData.price}</span>
           </div>
         </a>
       </div>
@@ -230,17 +302,39 @@ export const OfferDescreption = (props) => {
   <div className="flex justify-end my-4 w-full gap-4">
     <div data-v-1fb46fc5 className="btn text-center cursor-pointer secondary">Back</div>
     {/**/}
-    <div data-v-1fb46fc5 className="btn text-center cursor-pointer">Save &amp; Continue</div>
+    <div
+    onClick={ () =>
+      {
+         if(!desc) {
+            props.error("You need to write description!")
+         }else{
+          if(!title) {
+
+            props.error("You need to write title!")
+          }else{
+           if(!photo) {
+            props.error("You need to upload photo!")
+           }else{
+             props.next(desc,title)
+           }
+
+          }
+         }
+
+      }}
+    data-v-1fb46fc5 className="btn text-center cursor-pointer">Save &amp; Continue</div>
   </div>
 </div>
 {
     UploadModal && (
-      <UploadModal1 
-      photoUploaded={(photo) => {
+      <UploadModal1       photoUploaded={(photo) => {
         console.log(photo)
         setUploadedPhoto(photo)
+        handleUpload(photo)
       }}
-      close={() => {setUploadModal(false)}} />
+      close={() => {setUploadModal(false)}} 
+
+      />
     )
 }
 

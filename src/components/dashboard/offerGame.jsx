@@ -3,10 +3,9 @@ import { useState,useRef } from 'react';
 import BlueItem from '../../img/icons/item-icon-blue.svg'
 import AccountItem from '../../img/icons/account-icon-blue.svg'
 
-export default function OverviewOffer() {
+export default function OverviewOffer(props) {
     
 const [focused,setFocused] = useState(false)
-
 
 const [selectedVal, setSelectedVal] = useState("")
 const [selectedProduct,setSelectedProduct] = useState(1)
@@ -125,100 +124,30 @@ let InputRF = useRef();
                     borderWidth:0
                   }}>
                     <ul className="multiselect-options" id="multiselect-options" role="listbox">
-                      <li 
-                      onClick={()=> 
                       {
+                        props.games.map(game => {
 
-                             setSelectedVal(
-                             "8 Ball Pool (8BALLPOOL)"
-                           )
+                          return (
+                            <li 
+                            onClick={()=> 
+                            {
 
-                        setFocused(false)
-                         setTimeout(() => {
-                         InputRF.current.blur()
-                         },1000)
-                      }
-                 
-                      } className="multiselect-option" id="multiselect-option-8BALLPOOL" aria-selected="false" aria-label="8 Ball Pool (8BALLPOOL)" role="option"><span>8 Ball Pool (8BALLPOOL)</span></li>
-                      <li 
-                         onClick={()=> 
-                            {
-                                   setSelectedVal(
-                              "ARK (ARK)"
-                            )
+                              setSelectedVal(game)
+                              setFocused(false)
+                              props.selectedGame(game)
+                              setTimeout(() => {
+                              InputRF.current?.blur()
+                              },1000)
+                            }
+                      
+                            } className="multiselect-option" id={game} aria-selected="false" aria-label={game} role="option"><span>{game}</span></li>
 
-                            setFocused(false)
-                            setTimeout(() => {
-                            InputRF.current.blur()
-                            },1000)                         
-                            }}
-                      className="multiselect-option" id="multiselect-option-ARK" aria-selected="false" aria-label="ARK (ARK)" role="option"><span>ARK (ARK)</span></li>
-                      <li
-                        onClick={()=> 
-                            {
-                                   setSelectedVal(
-                              "Albion Online (ALBION)"
-                            )
-                       
-                            setFocused(false)
-                            setTimeout(() => {
-                            InputRF.current.blur()
-                            },1000)
-                            }}
-                      className="multiselect-option" id="multiselect-option-ALBION" aria-selected="false" aria-label="Albion Online (ALBION)" role="option"><span>Albion Online (ALBION)</span></li>
-                      <li 
-                        onClick={()=> 
-                            {
-                                   setSelectedVal(
-                              "Animal Crossing (ACNH)"
-                            )
-                       
-                            setFocused(false)
-                            setTimeout(() => {
-                            InputRF.current.blur()
-                            },1000)
-                            }}
-                      className="multiselect-option" id="multiselect-option-ACNH" aria-selected="false" aria-label="Animal Crossing (ACNH)" role="option"><span>Animal Crossing (ACNH)</span></li>
-                      <li 
-                        onClick={()=> 
-                            {
-                                   setSelectedVal(
-                              "pex Legends (APEXLEGENDS)"
-                            )
-                        
-                            setFocused(false)
-                            setTimeout(() => {
-                            InputRF.current.blur()
-                            },1000)
-                            }}
-                      className="multiselect-option" id="multiselect-option-APEXLEGENDS" aria-selected="false" aria-label="Apex Legends (APEXLEGENDS)" role="option"><span>Apex Legends (APEXLEGENDS)</span></li>
-                      <li 
-                        onClick={()=> 
-                            {
-                                   setSelectedVal(
-                              "ArcheAge (ARCHEAGE)"
-                            )
-                    
-                            setFocused(false)
-                            setTimeout(() => {
-                            InputRF.current.blur()
-                            },1000)
-                            }}
-                      className="multiselect-option" id="multiselect-option-ARCHEAGE" aria-selected="false" aria-label="ArcheAge (ARCHEAGE)" role="option"><span>ArcheAge (ARCHEAGE)</span></li>
-                      <li 
-                        onClick={()=> 
-                            {
-                                   setSelectedVal(
-                              "Arma 3 (ARMA_3)"
-                            )
-                    
-                            setFocused(false)
-                            setTimeout(() => {
-                            InputRF.current.blur()
-                            },1000)
-                            }}
-                      className="multiselect-option" id="multiselect-option-ARMA_3" aria-selected="false" aria-label="Arma 3 (ARMA_3)" role="option"><span>Arma 3 (ARMA_3)</span></li>
+                                )
+                              })
+                            }
                     </ul>
+
+
                     {/*v-if*/}{/*v-if*/}{/*v-if*/}
                   </div>
                   {/* Hacky input element to show HTML5 required warning */}{/*v-if*/}{/* Native input support */}{/*v-if*/}{/* Screen reader assistive text */}{/*v-if*/}{/* Create height for empty input */}
@@ -313,7 +242,25 @@ let InputRF = useRef();
       <div className="flex justify-end my-4 w-full gap-4">
         <div data-v-1fb46fc5 className="btn text-center cursor-pointer opacity-50 secondary">Back</div>
         {/**/}
-        <div data-v-1fb46fc5 className="btn text-center cursor-pointer">Save &amp; Continue</div>
+        <div 
+        
+         onClick={ () => {
+          if(selectedVal) {
+            let product;
+            if(selectedProduct == 1) {
+              product = "Items"
+            }else{
+              product = "Accounts"
+            }
+            props.next(product)
+          }else{
+            props.error("You need to select game!")
+          }
+          
+
+        
+        }}
+        data-v-1fb46fc5 className="btn text-center cursor-pointer">Save &amp; Continue</div>
       </div>
     </div>
     {/**/}{/**/}

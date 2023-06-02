@@ -1824,7 +1824,7 @@ img,video {
     }
 }
 
-@media(max-width: 1439px) {
+@media(max-width: 1024px) {
     .md\:fixed {
         position:fixed
     }

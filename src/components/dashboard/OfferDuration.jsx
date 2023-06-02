@@ -1,16 +1,40 @@
-import React,{useState} from 'react';
+import React,{useState,useRef} from 'react';
 import './offer.css'
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
 import { useEffect } from 'react';
+import Checkbox from 'rc-checkbox';
+
+import MissingImg from '../../img/icons/missingImg.webp'
+import {useAuthUser} from 'react-auth-kit'
+
+import {ref} from "firebase/storage"
+import {
+  getDownloadURL,
+  uploadBytesResumable 
+} from "firebase/storage";
+import storage from "../../firebaseConfig.js"
 
 
-export default function OfferDuration() {
+export default function OfferDuration(props) {
  const [selected,setSelected] = useState(0)
+ const [accepted,setAccepted] = useState(false)
  const items = ["3 days","7 days","14 days","1 months","3 months","Unlimited"]
-useEffect(() => {
-    // toast("Wow so easy !")
-}) 
+ const refCheck = React.useRef(null);
+ const [imageURL,setImageUrl] = useState("")
+
+   const auth = useAuthUser()
+
+React.useEffect(() => {
+  // if(props.allData) {
+    console.log(props.allData)
+  const storageRef = ref(storage,`/users/${auth()._id}/productImages/${props.allData._id}`)
+      getDownloadURL(storageRef).then(data => {
+      setImageUrl(data)
+    })
+  
+
+},[props]);
 
 
   return (
@@ -109,10 +133,17 @@ useEffect(() => {
               <div data-v-c4972650 className="flex items-center">
               </div>
               <label data-v-6ad32518 data-v-c4972650 className="flex items-center">
-                <input data-v-6ad32518 type="checkbox" />
-                <div data-v-6ad32518 className="checker inline-block cursor-pointer" />
-                <div data-v-6ad32518 className="checkbox-label cursor-pointer text-sm text-white px-1 leading-5">
-                  <div data-v-6ad32518>I have read and agree to follow the Secure Seller Delivery Agreement</div>
+                {/* <input data-v-6ad32518 type="checkbox" /> */}
+                <div style={{display:'flex',flexDirection:'row'}}>
+                <div data-v-6ad32518 className="checker inline-block cursor-pointer"  />
+                <Checkbox 
+                
+                value={accepted}
+                onChange={(e) => {
+                  setAccepted(e.target.checked)
+                }}
+                name="tac" ref={refCheck}></Checkbox>
+                <div style={{paddingLeft:10}}>  I have read and agree to follow the Secure Seller Delivery Agreement</div>
                 </div>
               </label>
             </div>
@@ -125,11 +156,12 @@ useEffect(() => {
           <div data-v-530e65a0 className="rounded-xl w-full min-h-full duration-300 z-10" style={{"background":"rgb(31, 35, 50)"}}>
             <div data-v-530e65a0 className="flex flex-col col-grow relative h-full gap-3 py-5">
               <div data-v-530e65a0 className="flex no-wrap items-center gap-4 px-5">
-                <div data-v-530e65a0 className="rounded-md shrink-0 flex justify-center items-center w-20 h-20 overflow-hidden" style={{"max-width":"80px","background":"rgb(37, 42, 61)"}}><img data-v-530e65a0 src="https://assets.igitems.com/files/thumbnail_mtsuCkWCffYF9iWWtdavpjifcuoNMQhN.png" format="webp" loading="lazy" fit="cover" position="center" height={80} width={80} /></div>
+                <div data-v-530e65a0 className="rounded-md shrink-0 flex justify-center items-center w-20 h-20 overflow-hidden" style={{"max-width":"80px","background":"rgb(37, 42, 61)"}}>
+                  <img data-v-530e65a0 src={imageURL} format="webp" loading="lazy" fit="cover" position="center" height={80} width={80} /></div>
                 {/**/}
                 <div data-v-530e65a0 className="font-bold leading-6 text-ellipsis overflow-hidden float-left w-full" style={{"height":"70px"}}>
                   {/**/}
-                  <div data-v-530e65a0 className="float-none">dasdasdasdads</div>
+                  <div data-v-530e65a0 className="float-none">{props.allData.title}</div>
                 </div>
               </div>
               <div data-v-530e65a0 className="px-5 overflow-hidden" style={{"max-height":"24px"}}>
@@ -140,18 +172,21 @@ useEffect(() => {
               <div data-v-530e65a0 className="price-group flex items-center justify-between pt-2 px-5">
                 <div data-v-530e65a0 className="flex items-center gap-2">
                   <div data-v-530e65a0 className="w-4 h-4"><img data-v-530e65a0 src="/img/icons/timer.svg" alt height={16} width={16} /></div>
-                  <div data-v-530e65a0 className="text-xs font-light text-white/70">Instant</div>
+                  <div data-v-530e65a0 className="text-xs font-light text-white/70">price</div>
                 </div>
-                <div data-v-530e65a0 className="font-bold text-white/80">$123.0</div>
+                <div data-v-530e65a0 className="font-bold text-white/80">${props.allData.price}</div>
               </div>
               <div data-v-530e65a0 className="w-full h-px" style={{"background":"rgb(23, 29, 41)"}} />
               <div data-v-530e65a0 className="flex items-center justify-between text-white/70 px-5">
                 <div data-v-530e65a0 className="flex gap-2 items-center relative h-10">
                   <div data-v-530e65a0 className="relative">
-                    {/**/}<img data-v-530e65a0 src="https://assets.igitems.com/files/thumbnail_PYo8eaN7sGBGD4YDM9fZHpHtvtk9DuGh.png" format="webp" loading="lazy" height={36} width={36} alt="Mr Mrodin ODIN" style={{"width":"36px","height":"36px","border-radius":"100%","border":"3px solid rgba(255, 255, 255, 0.12)"}} />
+                    {/**/}<img data-v-530e65a0 
+                     src={auth().profileImage?auth().profileImage:MissingImg }
+
+                    format="webp" loading="lazy" height={36} width={36} alt="Mr Mrodin ODIN" style={{"width":"36px","height":"36px","border-radius":"100%","border":"3px solid rgba(255, 255, 255, 0.12)"}} />
                   </div>
                   <div data-v-530e65a0 className="flex flex-col">
-                    <div data-v-530e65a0 className="text-sm">Mr Mrodin ODIN</div>
+                    <div data-v-530e65a0 className="text-sm">{auth().username}</div>
                     <div data-v-530e65a0 className="flex items-center gap-2">
                       {/**/}{/**/}
                     </div>
@@ -165,9 +200,9 @@ useEffect(() => {
           </div>
         </a>
         <div className="mt-4">
-          <div>Estimated income: <span className="font-bold text-secondary">$104.88</span></div>
+          <div>Estimated income: <span className="font-bold text-secondary">${props.allData.price}</span></div>
           <a href="/dashboard/account/Verification" rel="noopener noreferrer" target="_blank">
-            <div className="line-through opacity-70 decoration-secondary decoration-2">Estimated income as Verified: <span className="font-bold text-secondary">$111.03</span></div>
+            <div className="line-through opacity-70 decoration-secondary decoration-2">Estimated income as Verified: <span className="font-bold text-secondary">${props.allData.price-0.9}</span></div>
           </a>
         </div>
       </div>
@@ -177,7 +212,11 @@ useEffect(() => {
       {/**/}
       <div
        onClick={() => {
-        toast.warn("Please accept the terms.")
+        if(!accepted) {
+          toast.warn("Please accept the terms.")
+        }else{
+        props.next(items[selected])
+        }
        }}
       data-v-1fb46fc5 className="btn text-center cursor-pointer">Create new offer</div>
     </div>

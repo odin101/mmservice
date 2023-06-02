@@ -2,10 +2,15 @@ import React, { Component } from 'react'
 import google from '../img/icons/google.svg'
 import apple from '../img/icons/apple.svg'
 import discord from '../img/icons/discord.svg'
-
+import axios from 'axios'
+import API from '../config'
 export default class modal extends Component {
     constructor(props) {
         super(props)
+       this.state = {
+        email:'',
+        password:''
+       }
 
     }
   render() {
@@ -19,18 +24,35 @@ export default class modal extends Component {
                 <div className="text-3xl font-bold">Log in</div><div className="text-xs flex gap-1 justify-center">
                 <div className="opacity-70">New here?</div>
                 <span className="font-bold text-secondary cursor-pointer q-ml-xs">Create new account</span>
-                </div></div><form><label data-v-a158f60f className><div data-v-a158f60f className="opacity-70 text-white mb-2 text-sm">Email address</div>
-                <input data-v-a158f60f className="w-full outline-none text-white" type="email" placeholder style={{"background":"rgb(13, 18, 38)","border-radius":"14px","padding":"11px 22px","border":"1px solid transparent"}} />
+                </div></div><label data-v-a158f60f className><div data-v-a158f60f className="opacity-70 text-white mb-2 text-sm">Email address</div>
+                <input
+                onChange={(e) => this.setState({email:e.target.value})} 
+                value={this.state.email}
+                 data-v-a158f60f className="w-full outline-none text-white" type="email" placeholder style={{"background":"rgb(13, 18, 38)","border-radius":"14px","padding":"11px 22px","border":"1px solid transparent"}} />
                   </label><div className="mt-4"><label data-v-a158f60f className><div data-v-a158f60f className="opacity-70 text-white mb-2 text-sm">Password</div>
-                  <input data-v-a158f60f className="w-full outline-none text-white" type="password" placeholder style={{"background":"rgb(13, 18, 38)","border-radius":"14px","padding":"11px 22px","border":"1px solid transparent"}} />
+                  <input data-v-a158f60f className="w-full outline-none text-white" type="password" 
+                  value={this.state.password}
+                  
+                onChange={(e) => this.setState({password:e.target.value})} 
+                  placeholder style={{"background":"rgb(13, 18, 38)","border-radius":"14px","padding":"11px 22px","border":"1px solid transparent"}} />
                   </label></div><div className="flex flex-col mt-8">
                     <button type="submit"
-                    onClick={() => this.props.submit()}
+                    onClick={() => this.props.submit(this.state.email,this.state.password)}
                     ><div data-v-1fb46fc5 className="btn text-center cursor-pointer block custom mb-2">Login</div></button>
-                  <div className="self-end text-secondary text-xs cursor-pointer">Forgot password?</div></div></form><div className="w-full relative my-8 bg-white/10" style={{"height":"2px"}}>
+                  <div className="self-end text-secondary text-xs cursor-pointer">Forgot password?</div></div>
+                  <div className="w-full relative my-8 bg-white/10" style={{"height":"2px"}}>
                     <span className="absolute w-12 h-5 flex items-center justify-center uppercase font-bold text-sm tracking-widest left-1/2 top-1/2" style={{"background":"rgb(31, 35, 50)","-webkit-transform":"translate(-50%, -50%)","-ms-transform":"translate(-50%, -50%)","transform":"translate(-50%, -50%)"}}>or</span>
                     </div><div className="my-8 grid grid-cols-3 gap-2"><div data-v-5e610566 className="g-btn-wrapper">
-                      <div data-v-1fb46fc5 data-v-5e610566-s className="btn text-center cursor-pointer w-full flex justify-center items-center gap-4" style={{"background":"rgb(255, 255, 255)"}}><img src={google} style={{"height":"20px"}} /></div></div><a href="https://discord.com/api/oauth2/authorize?client_id=949362889192538193&redirect_uri=https://igitems.com/auth/discordAuth&response_type=code&scope=identify%20email"><div data-v-1fb46fc5 className="btn text-center cursor-pointer w-full flex justify-center items-center gap-4" style={{"background":"rgb(86, 98, 246)"}}>
+                      <div
+                       onClick={() => {
+
+                        window.open(`${API}/auth/google`, "_self");
+
+
+                       }}
+                       data-v-1fb46fc5 data-v-5e610566-s className="btn text-center cursor-pointer w-full flex justify-center items-center gap-4" style={{"background":"rgb(255, 255, 255)"}}>
+                        <img 
+                        src={google} style={{"height":"20px"}} /></div></div><a href="https://discord.com/api/oauth2/authorize?client_id=949362889192538193&redirect_uri=https://igitems.com/auth/discordAuth&response_type=code&scope=identify%20email"><div data-v-1fb46fc5 className="btn text-center cursor-pointer w-full flex justify-center items-center gap-4" style={{"background":"rgb(86, 98, 246)"}}>
                         <img src={discord} style={{"height":"19px"}} /></div></a><div className="cursor-pointer" id="apple-btn"><div data-v-1fb46fc5 className="btn text-center cursor-pointer w-full flex justify-center items-center gap-4" style={{"background":"rgb(0, 0, 0)"}}>
                         <img src={apple} style={{"height":"20px"}} /></div></div></div>
                         <div className="hidden"><div id="appleid-signin" data-mode="logo-only" data-type="sign in" data-color="black" data-border="true" data-radius={15} data-width="100%" data-height="100%" data-logo-size="medium" data-logo-position={0} data-label-position={0} className="vue-apple-signin">
