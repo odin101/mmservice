@@ -42,13 +42,6 @@ export const OfferDescreption = (props) => {
 
 
 
-// const storageRef = ref(storage,`/users/${auth()._id}/productImages/${props.allData._id}`)
-
-//     getDownloadURL(storageRef).then(data => {
-//       alert(data)
-//    })
-
-
 
    },[desc])
 

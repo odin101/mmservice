@@ -2,16 +2,47 @@ import React,{useEffect,useState} from 'react';
 import PaypalIcon from '../../img/icons/paypal.png'
 import CryptoIcon from '../../img/icons/crypto.png'
 import ClockIcon from '../../img/icons/clock.svg'
-export default function Checkout() {
+import axios from 'axios'
+
+import CoinbaseCommerceButton from 'react-coinbase-commerce';
+import 'react-coinbase-commerce/dist/coinbase-commerce-button.css';
+
+
+export default function Checkout(props) {
   const [load, setLoad] = useState(true);
+  const [PaymentType,setPaymentType] = useState(0)
+
+useEffect(() => {
 
 
+axios.post("https://api.commerce.coinbase.com/charges",{
+  name:'test',
+  description:'test',
+  pricing_type:'fixed_price',
+  local_price:{
+    amount:10,
+    currency:'USD'
+  },
+}, {
+  headers:{
+
+    'X-CC-Api-Key':'f578398e-bed8-4890-8715-0f2674522fab',
+    'Content-Type': 'application/json', 
+    'Accept': 'application/json'
+  }
+})
+.then((response) => {
+  console.log(JSON.stringify(response.data));
+})
+.catch((error) => {
+  console.log(error);
+});
+
+
+  
+})
 
  
-
-
-
-
 
 
   return (
@@ -70,40 +101,67 @@ export default function Checkout() {
         <div data-v-299c9395 className="grow sm:w-full">
           <div data-v-299c9395 className="text-sm mb-4 font-light text-white/60">Select payment method</div>
           <div data-v-299c9395 className="rounded-xl p-8 grow" style={{"background":"rgb(31, 35, 50)","box-shadow":"rgba(0, 0, 0, 0.14) 0px 8px 75px"}}>
-            <div data-v-299c9395 className="cursor-pointer">
+          
+          
+            <div data-v-299c9395 className="cursor-pointer" onClick={() => setPaymentType(0)}>
               <div data-v-299c9395 className="py-4 flex items-center gap-2 justify-between">
                 <div data-v-299c9395 className="flex items-center gap-2">
+                  {
+                    PaymentType==0?(
+
+                    <svg data-v-299c9395 width={16} height={16} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <circle data-v-299c9395 cx={8} cy={8} r="3.5" fill="#FFA300" stroke="#FFA300" strokeOpacity={1} fillOpacity={1} />
+                      <circle data-v-299c9395 cx={8} cy={8} r="7.5" stroke="#FFA300" />
+                    </svg>
+                    ):(
                   <svg data-v-299c9395 width={16} height={16} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle data-v-299c9395 cx={8} cy={8} r="3.5" fill="#FFA300" stroke="#FFA300" strokeOpacity={1} fillOpacity={1} />
-                    <circle data-v-299c9395 cx={8} cy={8} r="7.5" stroke="#FFA300" />
+                    <circle data-v-299c9395 cx={8} cy={8} r="3.5" fill="#FFA300" stroke="#FFA300" strokeOpacity={0} fillOpacity={0} />
+                    <circle data-v-299c9395 cx={8} cy={8} r="7.5" stroke="#2F3240" />
                   </svg>
+                    )
+                  }
                   <div data-v-299c9395 className="capitalize xs:hidden">Crypto</div>
                 </div>
                 <div data-v-299c9395 className style={{"max-height":"40px"}}><img data-v-299c9395 src={CryptoIcon} fit="contain" height={0} /></div>
               </div>
               <div data-v-299c9395 className="w-full h-0.5" style={{"background":"rgba(47, 50, 64, 0.6)"}} />
             </div>
-            <div data-v-299c9395 className="cursor-pointer">
+
+            
+            <div data-v-299c9395 className="cursor-pointer"  onClick={() => setPaymentType(1)}>
               <div data-v-299c9395 className="py-4 flex items-center gap-2 justify-between">
                 <div data-v-299c9395 className="flex items-center gap-2">
+                  {
+                    PaymentType==1?(
+
+                    <svg data-v-299c9395 width={16} height={16} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <circle data-v-299c9395 cx={8} cy={8} r="3.5" fill="#FFA300" stroke="#FFA300" strokeOpacity={1} fillOpacity={1} />
+                      <circle data-v-299c9395 cx={8} cy={8} r="7.5" stroke="#FFA300" />
+                    </svg>
+                    ):(
                   <svg data-v-299c9395 width={16} height={16} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <circle data-v-299c9395 cx={8} cy={8} r="3.5" fill="#FFA300" stroke="#FFA300" strokeOpacity={0} fillOpacity={0} />
                     <circle data-v-299c9395 cx={8} cy={8} r="7.5" stroke="#2F3240" />
                   </svg>
+                    )
+                  }
                   <div data-v-299c9395 className="capitalize xs:hidden">Paypal</div>
                 </div>
                 <div data-v-299c9395 className="opacity-60" style={{"max-height":"40px"}}><img data-v-299c9395 src={PaypalIcon} fit="contain" height={0} /></div>
               </div>
               <div data-v-299c9395 className="w-full h-0.5" style={{"background":"rgba(47, 50, 64, 0.6)"}} />
             </div>
+
+
+
           </div>
         </div>
         <div data-v-299c9395 className="grow max-w-xl sm:max-w-full">
           <div data-v-299c9395 className="text-sm mb-4 font-light text-white/60">Order summary</div>
           <div data-v-299c9395 className="rounded-xl p-8" style={{"background":"rgb(31, 35, 50)","box-shadow":"rgba(0, 0, 0, 0.14) 0px 8px 75px"}}>
             <div data-v-299c9395 className="flex items-center gap-4 mb-8">
-              <div data-v-299c9395 className="shrink-0"><img data-v-299c9395 src="https://assets.igitems.com/files/uhMnP39FKJzgnMfKW6ZNPxEwHuofoqXa.png" format="webp" loading="lazy" className="mx-auto w-full rounded-lg" style={{"object-fit":"cover","height":"90px","width":"120px"}} /></div>
-              <div data-v-299c9395 className="font-extrabold text-xl sm:text-xs">2 Huge:  Huge Mosaic Corgi Huge Mosaic Griffin | Pet Simulator X | PSX</div>
+              <div data-v-299c9395 className="shrink-0"><img data-v-299c9395 src={props.gameData?.Image} format="webp" loading="lazy" className="mx-auto w-full rounded-lg" style={{"object-fit":"cover","height":"90px","width":"120px"}} /></div>
+              <div data-v-299c9395 className="font-extrabold text-xl sm:text-xs">{props.gameData?.title}</div>
             </div>
             <div data-v-299c9395 className="flex items-center justify-between mt-4">
               <div data-v-299c9395 className="text-sm text-white/70">Quantity</div>
@@ -117,7 +175,9 @@ export default function Checkout() {
               </div>
             </div>
             <div data-v-299c9395 className="w-full my-6 h-0.5" style={{"background":"rgba(47, 50, 64, 0.6)"}} />
-            <div data-v-1fb46fc5 data-v-299c9395 className="btn text-center cursor-pointer mb-2 flex items-center justify-center" style={{"border-radius":"4px","height":"40px"}}>Pay $24.99</div>
+            <div data-v-1fb46fc5 data-v-299c9395 className="btn text-center cursor-pointer mb-2 flex items-center justify-center" style={{"border-radius":"4px","height":"40px"}}>Pay ${props.gameData?.price}</div>
+
+            <CoinbaseCommerceButton chargeId={'73bfdb54-4ee3-41f8-9b1e-9e2a5dc0fdc5'}/>
             <div data-v-299c9395 className="block w-full" id="payment-request-button" />
             <div data-v-299c9395 className="mt-8">
               <label data-v-6ad32518 data-v-299c9395 className="flex items-center">

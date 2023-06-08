@@ -13,7 +13,6 @@ export default function Authsuccess({navigation,route}) {
     const navigate = useNavigate();
   useEffect(() => {
 
-    // alert(token)
     axios.get(API + "/user/dashboard",
     {headers:{Authorization:'JWT ' + token}}
     )

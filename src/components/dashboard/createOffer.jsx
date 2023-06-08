@@ -47,13 +47,13 @@ useEffect(() => {
         .then(res => {
            setAllData(res.data)
           })
-        
-
     }
     setOfferStep(res.data.step)
-
   })
 },[offerStep])
+
+
+
 
  useEffect(() => {
   if(!gotData)  {

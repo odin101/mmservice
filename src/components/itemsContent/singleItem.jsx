@@ -1,6 +1,8 @@
 import React from 'react';
 import timerIcon from '../../img/icons/timer.svg'
 import MissingImg from '../../img/icons/missingImg.webp'
+import BlurImageLoader from 'react-blur-image-loader';
+
 export default function SingleItem(props) {
   return (
     <>
@@ -9,7 +11,7 @@ export default function SingleItem(props) {
                             data-v-d5ff87d0=""
                           >
                             <a
-                              href="/product/t2LmtZxPoXZavM6v4"
+                              href={"/product/"+props.data._id}
                               className="flex flex-col h-full w-full relative group"
                               style={{ minHeight: 230 }}
                               data-v-d5ff87d0=""
@@ -39,8 +41,8 @@ export default function SingleItem(props) {
                                       }}
                                       data-v-530e65a0=""
                                     >
-                                      <img
-                                        src={props.data.Image?props.data.Image:MissingImg}
+                                       <img
+                                        src={props.data.Image?props.data.Image+"_100x100":MissingImg}
                                         style={{}}
                                         format="webp"
                                         loading="lazy"
@@ -49,7 +51,8 @@ export default function SingleItem(props) {
                                         height={80}
                                         width={80}
                                         data-v-530e65a0=""
-                                      />
+                                      /> 
+
                                     </div>
                                     {/**/}
                                     <div
@@ -142,7 +145,7 @@ export default function SingleItem(props) {
                                       >
                                         {/**/}
                                         <img
-                                          src="https://assets.igitems.com/files/thumbnail_EBK2sg5GR33HvuR79Jpgy8aGhfN2rxwF.png"
+                                         src={props.data.PostedBy?.profileImage?props.data.PostedBy.profileImage:MissingImg }
                                           style={{
                                             width: 36,
                                             height: 36,
@@ -166,7 +169,7 @@ export default function SingleItem(props) {
                                           className="text-sm"
                                           data-v-530e65a0=""
                                         >
-                                          {props.data.PostedBy.username}
+                                          {props.data?.PostedBy?.username}
                                         </div>
                     
                                       </div>

@@ -29,7 +29,7 @@ function App() {
      <BrowserRouter>
  
   <meta charSet="utf-8" />
-  <title>Roblox Items for Sale - Cheap Roblox Collectibles | AutommService</title>
+  <title>AutommService</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta
     name="description"
@@ -262,7 +262,9 @@ function App() {
           }}/>} />
           <Route path="/items/:gameName" element={<Items />} />
           <Route path="/dashboard/create-offer" element={<CreateOffer />} />
-          <Route path="/product/:userId" element={<Product />} />
+          <Route path="/product/:offerId" element={<Product  sign={() => {
+            searchComponent.current.OpenLoginModal()
+          }} />} />
           <Route path="/dashboard/offers" element={<MyOffers />} />
           <Route path="/dashboard/account" element={<Accounts />} />
           <Route path="/authsuccess/:token" element={<Authsuccess />} />

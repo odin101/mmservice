@@ -195,7 +195,7 @@ const storageRef = ref(storage,`/users/${auth()._id}/productImages/${props.allDa
           </div>
         </a>
         <div className="mt-4">
-          <div>Estimated income: <span className="font-bold text-secondary">${props.allData.price-0.9}</span>
+          <div>Estimated income: <span className="font-bold text-secondary">${(props.allData.price-0.9).toFixed(2)}</span>
           </div>
           <a href="/dashboard/account/Verification" rel="noopener noreferrer" target="_blank">
             <div className="line-through opacity-70 decoration-secondary decoration-2">Estimated income as Verified: <span className="font-bold text-secondary">${props.allData.price}</span>

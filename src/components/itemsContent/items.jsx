@@ -13,28 +13,31 @@ import {useParams, useNavigate } from 'react-router-dom'
 
     const { gameName }  = useParams(); // from react-router, this is the `:page` parameter defined on the route. 
     const navigate = useNavigate(); 
-    let [searchParams, setSearchParams] = useSearchParams();
+    let [searchParams] = useSearchParams();
     const [games, setGames] = useState([]);
   const [gotData,setGotData] = useState(false)
+  const [Length,setLength] = useState(0)
+  const [page,setPage] = useState(1)
+  const [pageCount,setPageCount] = useState(1)
 
     useEffect(() => {
-    // alert(searchParams.get('page'))
-    if(!gotData) {
-      axios.get(API + "/user/getSpecOffers?game="+gameName)
+    let pg = searchParams.get("page");
+    if(pg) {
+      setPage(pg)
+    }else{
+      pg = 1
+    }
+    // if(!gotData) {
+      axios.get(API + "/user/getSpecOffers?game="+gameName+"&page="+pg)
       .then(res => {
-        setGames([...res.data])
+        setGames([...res.data.all])
+        setPageCount(res.data.totalPages)
+        setLength(res.data.length)
         setGotData(true)
       })
-    }
+    // }
 
-    })
-
-
-
-  
- 
-
-
+    },[gameName])
     const onSubmit = (e) =>  {
         
         if(this.props.signIn(
@@ -47,9 +50,6 @@ import {useParams, useNavigate } from 'react-router-dom'
         }else {
         }
     }
-
-
-
     return (
         <> 
         <div>
@@ -149,7 +149,7 @@ import {useParams, useNavigate } from 'react-router-dom'
                                 data-v-d5ff87d0=""
                               >
                                 <span data-v-d5ff87d0="">| </span>
-                                <span data-v-d5ff87d0="">120</span>
+                                <span data-v-d5ff87d0="">{Length}</span>
                                 <span className="sm:hidden" data-v-d5ff87d0="">
                                   results
                                 </span>
@@ -165,32 +165,6 @@ import {useParams, useNavigate } from 'react-router-dom'
                               className="flex items-center w-max"
                               data-v-d5ff87d0=""
                             >
-                              <div className="w-6 h-6" data-v-d5ff87d0="">
-                                <img
-                                  src={accountIcon}
-                                  style={{ width: 24, height: 24 }}
-                                  width="24px"
-                                  height="24px"
-                                  alt="Accounts"
-                                  data-v-d5ff87d0=""
-                                />
-                              </div>
-                              <div
-                                className="font-bold px-2 sm:text-sm"
-                                data-v-d5ff87d0=""
-                              >
-                                Accounts
-                              </div>
-                              <div
-                                className="font-light flex items-center gap-1 whitespace-nowrap sm:text-xs sm:block"
-                                data-v-d5ff87d0=""
-                              >
-                                <span data-v-d5ff87d0="">| </span>
-                                <span data-v-d5ff87d0="">99</span>
-                                <span className="sm:hidden" data-v-d5ff87d0="">
-                                  results
-                                </span>
-                              </div>
                             </div>
                           </a>
                           {/*]*/}
@@ -304,7 +278,7 @@ import {useParams, useNavigate } from 'react-router-dom'
                           className="w-full font-extrabold text-xl opacity-80 md:text-base"
                           data-v-d5ff87d0=""
                         >
-                          120 items found
+                          {Length} items found
                         </div>
                         <div
                           className="flex items-center gap-2 md:mt-0 md:gap-1"
@@ -346,16 +320,25 @@ import {useParams, useNavigate } from 'react-router-dom'
                           <div className="arrow left" data-v-82196624="" />
                         </button>
                         {/*[*/}
-                        <div className="p-1" data-v-82196624="">
-                          <a
-                            aria-current="page"
-                            href="/roblox-item?page=1"
-                            className="router-link-active router-link-exact-active cursor-pointer font-bold text-secondary"
-                            data-v-82196624=""
-                          >
-                            1
-                          </a>
-                        </div>
+                        {
+                          [...Array(pageCount).keys()].map((SingPageNumber) => {
+                            SingPageNumber+=1;
+                                 return (
+                          <div className="p-1" data-v-82196624="">
+                            <a
+                              aria-current="page"
+                              href={"/items/"+gameName+"?page=1"}
+                              className="router-link-active router-link-exact-active cursor-pointer font-bold text-secondary"
+                              style={{color:SingPageNumber==page?"#ffa300":"#FFF"}}
+                            >
+                              {SingPageNumber}
+                            </a>
+                          </div>
+                                 )
+                          })
+                        }
+
+
                         <button
                           className="h-10 w-10 flex items-center justify-center rounded-full"
                           type="button"
@@ -363,21 +346,6 @@ import {useParams, useNavigate } from 'react-router-dom'
                           data-v-82196624=""
                         >
                           <div className="arrow right" data-v-82196624="" />
-                        </button>
-                        <button
-                          className="h-10 w-10 flex items-center justify-center rounded-full"
-                          type="button"
-                          aria-label="Go to last page"
-                          data-v-82196624=""
-                        >
-                          <div
-                            className="arrow right double"
-                            data-v-82196624=""
-                          />
-                          <div
-                            className="arrow right double"
-                            data-v-82196624=""
-                          />
                         </button>
                       </div>
                        

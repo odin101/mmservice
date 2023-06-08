@@ -23,7 +23,7 @@ export default class modal extends Component {
               <div className="text-center mb-8">
                 <div className="text-3xl font-bold">Log in</div><div className="text-xs flex gap-1 justify-center">
                 <div className="opacity-70">New here?</div>
-                <span className="font-bold text-secondary cursor-pointer q-ml-xs">Create new account</span>
+                <span onClick={() => {this.props.create()}} className="font-bold text-secondary cursor-pointer q-ml-xs">Create new account</span>
                 </div></div><label data-v-a158f60f className><div data-v-a158f60f className="opacity-70 text-white mb-2 text-sm">Email address</div>
                 <input
                 onChange={(e) => this.setState({email:e.target.value})} 

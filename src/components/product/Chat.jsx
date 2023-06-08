@@ -1,28 +1,27 @@
 import React from 'react';
 import './Chat.css'
-import { useState } from 'react';
+import { useState,useRef } from 'react';
+import { useEffect } from 'react';
+import API from '../../config'
+
 export default function Chat(props) {
     const [InputValue,setInputValue] = useState("")
-const [ChatMessages,setChatMessages] = useState([
-    {
-      msg:"Hello",
-      me:true
-    },
+const [ChatMessages,setChatMessages] = useState([])
+const scroller = useRef(null)
 
-    {
-      msg:"Hey",
-      me:false
-    }
-])
-
-
-
+useEffect(() => {
+  scroller.current.scrollIntoView({ behavior: "smooth" });
+  setChatMessages(props.chatData)
+})
 const SendMsg = () => {
+  scroller.current.scrollIntoView({ behavior: "smooth" });
     if(InputValue) {
 
-                    setChatMessages([...ChatMessages,{me:true,msg:InputValue}])
+                   // setChatMessages([...ChatMessages,{me:true,msg:InputValue}])
+                   props.onSendMSG(InputValue)
                     setInputValue("")
     }
+
 }
 
 
@@ -49,9 +48,11 @@ const SendMsg = () => {
           <div data-v-5d55811e className="p-2 py-4 w-full flex justify-between items-center" style={{"border-radius":"10px 10px 0px 0px","background":"rgb(24, 33, 56)"}}>
             <div data-v-5d55811e className="text-white">
               <div data-v-5d55811e className="flex items-center gap-2">
-                <img data-v-5d55811e src="https://assets.igitems.com/files/PYo8eaN7sGBGD4YDM9fZHpHtvtk9DuGh.png" format="webp" loading="lazy" style={{"height":"40px","width":"40px","border-radius":"100%","border":"3px solid rgba(255, 255, 255, 0.12)","margin":"0px 5px"}} />
+                <img data-v-5d55811e  
+                src={API+"/user/userphoto?id=" + props.meta.id}
+                format="webp" loading="lazy" style={{"height":"40px","width":"40px","border-radius":"100%","border":"3px solid rgba(255, 255, 255, 0.12)","margin":"0px 5px"}} />
                 <div data-v-5d55811e>
-                  <div data-v-5d55811e className="font-bold" style={{"font-size":"16px"}}>Chat with Mr Mrodin ODIN</div>
+                  <div data-v-5d55811e className="font-bold" style={{"font-size":"16px"}}>Chat with {props.meta.name}</div>
                   <div data-v-5d55811e className="flex items-center gap-1 mt-1">
                     <div data-v-5d55811e className="h-2 w-2 bg-green-500 rounded-full" />
                     <div data-v-5d55811e className="text-xs">Online now</div>
@@ -63,27 +64,35 @@ const SendMsg = () => {
           </div>
           <div data-v-5d55811e className="w-full bg-white/10 h-0.5" />
           <div data-v-5d55811e className="chat overflow-hidden" style={{"background":"rgb(31, 35, 50)","border-radius":"0px 0px 10px 10px"}}>
-            <div data-v-5d55811e data-overlayscrollbars-initialize className="flex flex-col gap-2 py-4" style={{"height":"500px"}} data-overlayscrollbars="host">
+            <div  data-v-5d55811e data-overlayscrollbars-initialize className="flex flex-col gap-2 py-4" style={{"height":"500px"}} data-overlayscrollbars="host">
               <div className="os-size-observer os-size-observer-appear">
                 <div className="os-size-observer-listener ltr" />
               </div>
               <div className="os-viewport os-viewport-scrollbar-hidden" style={{"margin-right":"0px","margin-bottom":"-32px","margin-left":"0px","top":"-16px","right":"auto","left":"0px","width":"calc(100% + 0px)","padding":"16px 0px","overflow-y":"scroll"}}>
                 <div data-v-5d55811e className="text-center flex flex-col items-center mb-2">
                   <div data-v-5d55811e className="font-bold text-secondary mb-4">Help Us Protect You</div>
-                  <div data-v-5d55811e className="text-sm max-w-lg px-4 text-white/70">It is strictly prohibited to share social media and payment information, including Discord, Skype, Instagram, PayPal etc. Doing so will void the protection offered by igitems for both parties involved.</div>
+                  <div data-v-5d55811e className="text-sm max-w-lg px-4 text-white/70">It is strictly prohibited to share social media and payment information, including Discord, Skype, Instagram, PayPal etc. Doing so will void the protection offered by  AutoMMservice for both parties involved.</div>
                 </div>
                     
                     {
-                        ChatMessages.map(msg => {
+                        ChatMessages.map((msg,index) => {
+                          if(msg.sender == props.myid) {
+                            msg.me = true
+                          }
 
                             return <div data-v-5d55811e>
                 <div data-v-5d55811e className={msg.me?"flex gap-2 items-center justify-end rounded":"flex gap-2 items-center justify-end rounded flex-row-reverse"} style={{"position":"relative"}}>
                     {/**/}{/**/}
                     <div data-v-5d55811e className="data-v-tooltip" data-v-tooltip="Seen at May 26, 2023, 9:32 PM">
+                 {
+                  ChatMessages.length-1 == index && msg.sender ==props.myid &&  (
                     <svg data-v-5d55811e width={18} height={18} viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path data-v-5d55811e d="M10.875 6.04297L5.02941 11.8885L1.5 8.35912" stroke="#6FCB20" strokeWidth="1.41176" strokeLinecap="round" strokeLinejoin="round" />
                         <path data-v-5d55811e d="M16.125 5.25L8.25 13.125" stroke="#6FCB20" strokeWidth="1.41176" strokeLinecap="round" />
                     </svg>
+                  )
+                 }
+
                     </div>
                     <div data-v-5d55811e className={msg.me?"message items-center gap-2 text-white justify-end sent mr-4":"message items-center gap-2 text-white"} style={{"font-size":"14px","font-weight":"500","max-width":"75%"}}>
                     <div data-v-5d55811e className="break-words whitespace-pre-wrap">{msg.msg}</div>
@@ -112,6 +121,7 @@ const SendMsg = () => {
 
 
 
+            <div ref={scroller} />
 
 
 
@@ -120,7 +130,6 @@ const SendMsg = () => {
                     ///
                 }
               </div>
-
 
 
 

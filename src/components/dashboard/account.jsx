@@ -1,11 +1,82 @@
-import React from 'react';
+import React,{useEffect, useState} from 'react';
 import InfoIcon from '../../img/icons/settings/info.svg'
 import PhoneIcon from '../../img/icons/phonemail.svg'
 import AboutMeIcon from '../../img/icons/verification.svg'
 import SecurityIcon from '../../img/icons/password.svg'
 import Social from '../../img/icons/social.svg'
+import UploadModal1 from './uploadModal';
+import axios from 'axios'
+import MissingImg from '../../img/icons/missingImg.webp'
+import {useAuthUser} from 'react-auth-kit'
+
+import API from '../../config'
+import storage from "../../firebaseConfig.js"
+import {ref} from "firebase/storage"
+
+import {
+  getDownloadURL,
+  uploadBytesResumable 
+} from "firebase/storage";
+
+
 
 export default function Accounts() {
+
+   const auth = useAuthUser()
+   const [photo,setUploadedPhoto] = useState(false)
+   const [UploadModal,setUploadModal] = useState(false)
+   const [ProfilePhotoURL,setProfilePhotoURL] = useState("")
+   const [gotData,setGotData] = useState(false)
+
+
+   useEffect(() => {
+if(!gotData) {
+
+    setProfilePhotoURL(auth().profileImage)
+    setGotData(true)
+}
+   })
+   
+   function handleUpload(file) {
+       
+          if (!file) {
+            alert("Please choose a file first!")
+        }
+
+        const storageRef = ref(storage,`/userProfiles/${auth()._id}}`)
+        const uploadTask = uploadBytesResumable(storageRef, file);
+
+        uploadTask.on(
+            "state_changed",
+            (snapshot) => {
+                const percent = Math.round(
+                    (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+                );
+
+                // update progress
+            },
+            (err) => console.log(err),
+            () => {
+                // download url
+                getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+                                    setProfilePhotoURL(url)
+                              axios.post(API + "/user/userphoto",{
+                                photo:url,
+                              },{
+                            headers:{
+                              'Authorization':auth().token
+                            }
+                          })
+                          .then(res => {
+
+                                    setProfilePhotoURL(url)
+                          })
+              });
+            }
+        ); 
+}
+
+
   return (
     <>
     <div data-v-4e346f31 className="container py-8 text-white" style={{"margin":"0px"}}>
@@ -61,12 +132,20 @@ export default function Accounts() {
         <div data-v-4e346f31 className="text-white font-bold text-xl">Personal Information</div>
         <div data-v-4e346f31>
           <div className="flex flex-col items-center my-8">
-            <img src="https://assets.igitems.com/files/PYo8eaN7sGBGD4YDM9fZHpHtvtk9DuGh.png" format="webp" loading="lazy" style={{"width":"120px","border-radius":"100%","border":"2px solid rgba(255, 255, 255, 0.05)"}} />
-            <div className="flex items-center gap-2 text-base text-secondary mt-2 cursor-pointer">
+            <img                                        
+               src={ProfilePhotoURL?ProfilePhotoURL:MissingImg }
+            
+            format="webp" loading="lazy" fit="cover"
+
+                                        position="center"
+             style={{"width":"120px",height:120,"border-radius":"100%","border":"2px solid rgba(255, 255, 255, 0.05)",  "object-fit": "cover"}} />
+            <div 
+             onClick={() => setUploadModal(true)}
+             className="flex items-center gap-2 text-base text-secondary mt-2 cursor-pointer">
               <svg width={18} height={12} viewBox="0 0 18 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M14.5125 4.53C14.2606 3.25329 13.5732 2.10364 12.5678 1.27743C11.5624 0.451225 10.3013 -0.000294182 9 1.43803e-07C6.8325 1.43803e-07 4.95 1.23 4.0125 3.03C2.91018 3.14912 1.89075 3.67141 1.15012 4.49649C0.409478 5.32158 -0.000128776 6.39126 3.03696e-08 7.5C3.03696e-08 9.9825 2.0175 12 4.5 12H14.25C16.32 12 18 10.32 18 8.25C18 6.27 16.4625 4.665 14.5125 4.53ZM10.5 6.75V9.75H7.5V6.75H5.25L9 3L12.75 6.75H10.5Z" fill="#FFA300" />
               </svg>
-              <div className="font-bold">Change</div>
+              <div  className="font-bold">Change</div>
             </div>
           </div>
           <div className="w-full h-0.5 bg-white/10" />
@@ -246,6 +325,19 @@ export default function Accounts() {
     </div>
   </div>
 </div>
+
+{
+    UploadModal && (
+      <UploadModal1       photoUploaded={(photo) => {
+        console.log(photo)
+        setUploadedPhoto(photo)
+        handleUpload(photo)
+      }}
+      close={() => {setUploadModal(false)}} 
+
+      />
+    )
+}
     </>
   );
 }

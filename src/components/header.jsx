@@ -28,11 +28,20 @@ import {useAuthUser} from 'react-auth-kit'
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
 import { isMobile } from 'react-device-detect';
+import ChatSound from '../sound/chat.mp3'
+import useSound from 'use-sound';
+
+
+
+import { get, ref as firebaseRef,push,set, onValue} from "firebase/database";
+import {db} from "../firebaseConfig.js"
+import MiniChat from './miniChat';
+
 
 const Header = forwardRef((props,ref) => {
-const searchInput = useRef(null)
-
-const [mobileSearch,setMobileSearch] = useState(false);
+  const searchInput = useRef(null)
+  const [mobileSearch,setMobileSearch] = useState(false);
+  const [play] = useSound(ChatSound);
 
 useImperativeHandle(ref,() => ({
    focusSearch()  {
@@ -41,7 +50,13 @@ useImperativeHandle(ref,() => ({
     }else{
       searchInput.current.focus()
     }
-  }
+  },
+
+ OpenLoginModal()  {
+   setModalVisible(true)
+}
+
+
 }))
 
   const isAuthenticated = useIsAuthenticated()
@@ -58,6 +73,10 @@ const [focused,setFocused] = useState(false)
 const [connection,setConntection] = useState(false)
 const [connectionMobile,setConntectionMobile] = useState(false)
 const [notificaitons,setNotifications] = useState(false)
+const [getUser,setGetUser] = useState(false)
+const [seen,notSeen] = useState(false)
+const [miniChatVisible,setMiniChat] = useState(false)
+const [ChatData,setChatData] = useState([])
 
 
   const [games, setGames] = useState([]);
@@ -75,6 +94,111 @@ useEffect(() => {
  },[games])
 
 
+
+useEffect(() => {
+
+  if(isAuthenticated()) {
+    const query = firebaseRef(db, "users/"+auth()._id);
+      onValue(query,(snapshot) => {
+      const data = snapshot.val();
+      if(data?.seen?.seen !== undefined)  {
+        if(data.seen.seen == false) {
+           notSeen(true)
+           play()
+        }else{
+           notSeen(false)
+        }
+      }
+    if(data) {
+      console.log(data)
+      setChatData([...Object.values(data)])
+
+    }
+
+    });
+
+ }
+ },[])
+
+
+
+useEffect(() => {
+  // if(!getUser)  {
+    if(isAuthenticated()) {
+      axios.get(API + "/user/dashboard",{
+        headers:{
+          'Authorization':auth().token
+        }
+      })
+      .then(res => {
+       signIn(
+            {
+                token:res.data.token,
+                expiresIn:36000,
+                authState:res.data,
+                tokenType: "Bearer",
+            }
+        )
+        
+      })
+    }
+  //
+
+  // setGames(...['worls'])
+ },[])
+
+
+const OpenChat = () => {
+             if(ChatData.length) {
+
+    const query = firebaseRef(db, "users/"+auth()._id);
+     set(firebaseRef(db, "users/"+auth()._id+"/seen"),{
+              seen:true
+              }) 
+   
+
+                 if(miniChatVisible) {
+                  setMiniChat(false)
+                 }else{
+                  setMiniChat(true)
+                 }
+             }else{
+
+            if(connection) {
+            setConntection(false)
+              }else{
+            setConntection(true)
+              }
+
+             }
+
+
+}
+
+
+
+
+
+
+
+const CloseChat = () => {
+                 if(miniChatVisible) {
+                  setMiniChat(false)
+             }else{
+            if(connection) {
+              setConntection(false)
+             }
+
+            }
+}
+
+
+
+
+
+
+
+
  const onSubmitLogin = (email,password)  => {
   axios.post(API + '/user/signin',{
     password,
@@ -85,8 +209,7 @@ useEffect(() => {
     if(res.data.message) {
       toast.error(res.data.message)
     }else{
-
-        setModalVisible(false)
+       setModalVisible(false)
        signIn(
             {
                 token:res.data.token,
@@ -136,19 +259,13 @@ useEffect(() => {
 
     }
 
-
-
-
  const Logout = ()  => {
   let token = auth().token
-
   axios.get(API + '/user/signout',{
     headers:{Authorization: token}
   }).then(res => {
     signOut()
   })
-
-
   }
 
 
@@ -170,6 +287,10 @@ useEffect(() => {
             {
               modalVisible?(
                 <LoginModal 
+                create={() => {
+                  setModalVisible(false);
+                  setRegModal(true)
+                }}
                  submit={(email,password) => {
                   onSubmitLogin(email,password)
                  }}
@@ -185,10 +306,12 @@ useEffect(() => {
             {
               RegModal?(
                  <RegModalComponent 
+                 login={() => {
+                  setRegModal(false);
+                  setModalVisible(true)
+                 }}
                   submit={(username,email,password) => {
                     onSubmitReg(username,email,password)
-                    
-
                   }}
                  backClick={() => 
                 //  this.setState({RegModal:false})
@@ -493,11 +616,16 @@ useEffect(() => {
         <div 
 
           onClick={() => {
+
             if(connectionMobile) {
             setConntectionMobile(false)
               }else{
             setConntectionMobile(true)
               }
+
+
+
+
           }}
         className="cursor-pointer relative">
           <svg width={21} height={21} viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -513,7 +641,6 @@ useEffect(() => {
 
     <HandleOutsideClick onOutsideClick={() => {
       setTimeout(() => {
-
        setConntectionMobile(false)
       },100)
     }}>
@@ -589,16 +716,30 @@ useEffect(() => {
       style={{ "min-width": "90px" }}>
         
         <div 
-          onClick={() => {
-            if(connection) {
-            setConntection(false)
-              }else{
-            setConntection(true)
-              }
-          }}
         className="flex items-center">
           
-          <div className="cursor-pointer relative">
+          {
+          
+          seen?(
+
+              <div className="cursor-pointer relative" 
+          onClick={() => {
+               OpenChat()
+          }}
+              >
+                <svg width={21} height={21} viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M15.75 0H5.25C2.31 0 0 2.30137 0 5.23039V11.5068V12.5529C0 15.3773 2.31 17.7833 5.25 17.7833H6.825C7.14 17.7833 7.455 17.9925 7.665 18.2017L9.24 20.2939C9.975 21.2354 11.025 21.2354 11.76 20.2939L13.335 18.2017C13.545 17.8879 13.86 17.7833 14.175 17.7833H15.75C18.69 17.7833 21 15.4819 21 12.5529V5.23039C21 2.30137 18.69 0 15.75 0ZM11.55 12.3437H5.25C4.83 12.3437 4.41 12.0299 4.41 11.5068C4.41 10.9838 4.725 10.67 5.25 10.67H11.55C11.97 10.67 12.39 10.9838 12.39 11.5068C12.39 12.0299 11.97 12.3437 11.55 12.3437ZM15.75 7.11333H5.25C4.83 7.11333 4.515 6.69489 4.515 6.27646C4.515 5.85803 4.83 5.54421 5.25 5.54421H15.75C16.17 5.54421 16.59 5.85803 16.59 6.38107C16.59 6.90411 16.17 7.11333 15.75 7.11333V7.11333Z" fill="white" fillOpacity={1} />
+                </svg>
+                <div className="absolute rounded-full bg-secondary animate-ping" style={{"width":"11px","height":"11px","right":"-2px","top":"-2px"}} />
+                <div className="absolute rounded-full bg-secondary border-2 border-box" style={{"width":"11px","height":"11px","right":"-4px","top":"-4px"}} />
+              </div>
+          ):(
+
+          <div className="cursor-pointer relative" 
+          onClick={() => {
+               OpenChat()
+          }}
+          >
             <svg
               width={21}
               height={21}
@@ -612,8 +753,26 @@ useEffect(() => {
                 fillOpacity={1}
               />
             </svg>
-          </div>
+          </div> 
+          )
 
+        }
+        {
+          miniChatVisible && (
+            <HandleOutsideClick onOutsideClick={() => {
+              setTimeout(() => {
+              CloseChat()
+              },100)
+            }} >
+              <MiniChat 
+                  goToChat={() => {
+                    
+                  }}
+                  data={ChatData}
+                />
+              </HandleOutsideClick>
+          )
+        }
 
 
 
@@ -621,12 +780,11 @@ useEffect(() => {
         connection && (
     <HandleOutsideClick onOutsideClick={() => {
       setTimeout(() => {
-
-       setConntection(false)
+      CloseChat()
       },100)
     }}>
         <div data-overlayscrollbars-initialize
-        className="sm:right-0 top-20 rounded-lg absolutiii" style={{"background":"rgb(42, 46, 60)","box-shadow":"rgba(0, 0, 0, 0.3) 0px 4px 34px","width":"400px","margin-left":"-200px","max-width":"80%", 
+        className="sm:right-0 top-20 rounded-lg absolutiii absolutiiiBliad" style={{"background":"rgb(42, 46, 60)","box-shadow":"rgba(0, 0, 0, 0.3) 0px 4px 34px","width":"400px","margin-left":"-200px","max-width":"80%", 
        position:'absolute !important' }} data-overlayscrollbars="host">
   <div className="os-size-observer os-size-observer-appear">
     <div className="os-size-observer-listener ltr" />
@@ -654,24 +812,7 @@ useEffect(() => {
         )
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        </div>
+    </div>
 
 
         

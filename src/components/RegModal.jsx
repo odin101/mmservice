@@ -34,7 +34,7 @@ const RegModal = (props) => {
               <div className="text-3xl font-bold">Create an account</div>
               <div className="text-xs flex gap-1 justify-center">
                 <span>Already have an account?</span>
-                <span className="font-bold text-secondary cursor-pointer">Log in</span>
+                <span onClick={() => props.login()} className="font-bold text-secondary cursor-pointer">Log in</span>
               </div>
               <div className="my-8 grid grid-cols-3 gap-2">
                 <div data-v-5e610566 className="g-btn-wrapper">{/*v-if*/}

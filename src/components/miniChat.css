@@ -1,0 +1,8 @@
+.absoluti {
+background:rgb(42, 46, 60);
+box-shadow:rgba(0, 0, 0, 0.3) 0px 4px 34px;
+width:400px;
+margin-left:-200px;
+max-width:80%;
+position:absolute !important;
+}

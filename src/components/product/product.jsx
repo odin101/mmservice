@@ -7,18 +7,131 @@ import Chat from './Chat';
 import { PhotoProvider, PhotoView } from 'react-photo-view';
 import 'react-photo-view/dist/react-photo-view.css';
 import Checkout from './Checkout';
+import axios from 'axios'
+import { useParams } from 'react-router-dom';
+import API from '../../config'
+import parse  from 'html-react-parser'
+import { useNavigate} from "react-router-dom";
+// import ProgressiveImage from "react-progressive-image-loading";
+// import LazyImage from 'react-lazy-blur-image';
+import Loader from '../Loader'
 
-export default function Product() {
+
+
+import {useAuthUser} from 'react-auth-kit'
+import BlurImageLoader from 'react-blur-image-loader';
+import { get, ref,push,set,onValue,off } from "firebase/database";
+import {db} from "../../firebaseConfig.js"
+
+ 
+  
+
+function makeid(length) {
+  let result = '';
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const charactersLength = characters.length;
+  let counter = 0;
+  while (counter < length) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    counter += 1;
+  }
+  return result;
+}
+
+  const unicId = makeid(50);
+export default function Product(props) {
   const isAuthenticated = useIsAuthenticated()
+
+
+  const auth = useAuthUser()
   const [chatModal,setChatModal] = useState(false)
+  const [gameData,setGameData] = useState({})
+  const [gotData,setGotData] = useState(false)
+  const [Buying,setBuying] = useState(false)
+  const { offerId }  = useParams(); 
+  const navigate = useNavigate();
+  const [projects, setProjects] = useState([]);
+  const [chatId,setChatId] = useState("")
+  const [chatMessages,setChatMessages] = useState([])
+  const [meta,setMetaData] = useState({name:'',id:''})
+  const [test,setTest] = useState(false)
+ 
 
   useEffect(() => {
     chatModal==true && (document.body.style.overflow = 'hidden')
     !chatModal && (document.body.style.overflow = 'unset')
  }, [chatModal ]);
+   useEffect(() => {
+    if(!gotData) {
+      axios.get(API + "/user/product/"+offerId)
+      .then(res => {
+        setGameData(res.data)
+        setGotData(true)
+      })
+    }
+
+    if(gotData) {
+    if(isAuthenticated()) {
+          const query = ref(db, "users/"+auth()._id+"/"+gameData?.PostedBy?._id);
+              onValue(query,(snapshot) => {
+            const data = snapshot.val();
+            if(!data)  {
+              setChatId(unicId)
+
+              set(ref(db, "users/"+auth()._id+"/"+gameData?.PostedBy?._id),{
+                  chatID: unicId,
+                  userInfo:gameData?.PostedBy
+              })
+          
+              set(ref(db, "users/"+gameData?.PostedBy?._id+"/"+auth()._id),{
+                  chatID: unicId,
+                  userInfo:auth()
+              })  
+            }else{
+                setChatId(data.chatID)
+                setMetaData({...{name:gameData?.PostedBy.username,id:gameData?.PostedBy?._id}})
+               const chatQuery = ref(db, "chatIds/"+data.chatID);
+               onValue(chatQuery,(snapshot) => {
+                     console.log((snapshot.val()))
+                     if(snapshot.val()) {
+                     setChatMessages([...Object.values(snapshot.val())])
+                     }
+                   })
+            }
+
+          });
+      //  return () =>  unsub()
+       }
+}
+
+
+    },[gameData,gotData])
+
+
+
+const sendMessage = (msg) => {
+
+
+   push(ref(db, "chatIds/"+chatId), {
+      msg:msg,
+      sender:auth()._id,
+
+    })
+    set(ref(db, "users/"+gameData?.PostedBy?._id+"/seen"),{
+     seen:false
+    })
+
+}
+
+
+
+
   return (
     <>
-    {/* <Checkout /> */}
+    {
+   !gotData && (<Loader />)
+    }
+    { Buying && <Checkout gameData={gameData} />  }
         <PhotoProvider>
 
     <div data-v-bfa0d376>
@@ -26,12 +139,14 @@ export default function Product() {
     <div data-v-bfa0d376 className="py-8 sm:py-4" style={{"background":"rgb(18, 19, 35)"}}>
       <div data-v-bfa0d376 className="container">
         <div data-v-bfa0d376 className="flex items-center no-wrap my-3 sm:justify-between">
-          <div data-v-bfa0d376 className="font-extrabold text-xl sm:text-xs">dasdasdasdads</div>
+          <div data-v-bfa0d376 className="font-extrabold text-xl sm:text-xs">{gameData?.title}</div>
           <div data-v-bfa0d376 className="ml-auto" />
           <a data-v-bfa0d376 href="/dashboard/create-offer/6fdTdxzpFjr8aiSx7" className="pl-4">
             <div data-v-1fb46fc5 data-v-bfa0d376 className="btn text-center cursor-pointer secondary" style={{"padding":"5px 14px","font-size":"14px"}}>Edit</div>
           </a>
-          <div data-v-bfa0d376 className="pl-4">
+          <div data-v-bfa0d376 className="pl-4" onClick={() => {
+            navigate(-1)
+          }}>
             <div data-v-1fb46fc5 data-v-bfa0d376 className="btn text-center cursor-pointer secondary" style={{"padding":"5px 14px","font-size":"14px"}}>Back</div>
           </div>
         </div>
@@ -44,11 +159,23 @@ export default function Product() {
             <div data-v-bfa0d376 className="py-4 px-8 grow">
               <div data-v-bfa0d376 className="flex no-wrap gap-8 md:flex-col md:items-center">
 
-                 <PhotoView src={'https://assets.igitems.com/files/mtsuCkWCffYF9iWWtdavpjifcuoNMQhN.png'}>
+                 <PhotoView src={gameData?.Image}>
                 <div data-v-bfa0d376 className="grow flex flex-col justify-center cursor-pointer md:min-w-full min-w-[320px]" style={{"max-width":"300px",height:300}}>
                   <div data-v-bfa0d376 className="flex items-center grow" style={{"max-height":"250px",height:250}}>
                     
-                    <img data-v-bfa0d376 src="https://assets.igitems.com/files/mtsuCkWCffYF9iWWtdavpjifcuoNMQhN.png" format="webp" loading="lazy" className="mx-auto w-full rounded-lg" style={{"object-fit":"cover","height":"250px"}} />
+                    {/* <img data-v-bfa0d376 src={gameData?.Image} format="webp" loading="lazy" className="mx-auto w-full rounded-lg" style={{"object-fit":"cover","height":"250px"}} /> */}
+                    {/* <ProgressiveImage
+                      preview={gameData?.Image+"_100x100"}
+                      src={gameData?.Image}
+                      render={(src, style) => <img data-v-bfa0d376 src={src}   className="mx-auto w-full rounded-lg" style={{"object-fit":"cover","height":"250px"}} />}
+                  /> */}
+            
+                                      <BlurImageLoader src={gameData?.Image} 
+                        preview={gameData?.Image+"_100x100"} 
+                        fullCover={true}
+                        maxBlurLevel={10}
+                        transitionTime={400}/>
+
                     </div>
                   <div data-v-bfa0d376 className="grid grid-cols-3 items-center gap-2 mt-2">
                     <div data-v-bfa0d376 className="h-full flex items-center justify-center relative overflow-hidden rounded-lg px-3 py-2" style={{"background":"rgb(37, 42, 61)","height":"50px"}}><img data-v-bfa0d376 src="https://assets.igitems.com/files/avatar-placeholder.svg" format="webp" loading="lazy" className="rounded-lg" style={{"object-fit":"contain","max-height":"30px"}} /></div>
@@ -67,7 +194,7 @@ export default function Product() {
                       <div data-v-bfa0d376 className="flex flex-col">
                         <div data-v-bfa0d376 className="flex">
                           <div data-v-bfa0d376 className="mr-2">Sell by</div>
-                          <a data-v-bfa0d376 href="/profile/Mr Mrodin ODIN" className="font-extrabold">Mr Mrodin ODIN</a>
+                          <a data-v-bfa0d376 href="/profile/Mr Mrodin ODIN" className="font-extrabold">{gameData?.PostedBy?.username}</a>
                         </div>
                         <div data-v-bfa0d376 className="flex items-center mt-1">
                           <div data-v-bfa0d376 className="flex items-center gap-2">
@@ -84,11 +211,15 @@ export default function Product() {
             //Chat 
            }
               {
-                !isAuthenticated() && (
+                auth()?._id!==gameData?.PostedBy?._id &&(
                                   <div data-v-bfa0d376 
                                   
                                   onClick={() => {
-                                    setChatModal(true)
+                                    if(isAuthenticated()) {
+                                      setChatModal(true)
+                                    }else{
+                                     props.sign()
+                                    }
 
                                   }}
                                   className="flex items-center gap-1 text-primary rounded-lg px-2 py-1 text-xs cursor-pointer" style={{"background":"rgba(255, 255, 255, 0.03)","border":"1px solid rgb(60, 100, 177)"}}>
@@ -105,9 +236,17 @@ export default function Product() {
 
               {
                 chatModal && (
-                  <Chat backClick={() => {
+                  <Chat 
+                  meta={meta}
+                  chatData={chatMessages}
+                  myid={auth()._id}
+                  onSendMSG={(m) => {
+                        sendMessage(m)
+                  }}
+                  backClick={() => {
                     setChatModal(false)
-                  }}/>
+                  }}
+                  />
                 )
               }
 
@@ -118,7 +257,7 @@ export default function Product() {
                     <div data-v-bfa0d376 className="flex p-3 justify-between no-wrap" style={{"gap":"0px 10px"}}>
                       <span data-v-bfa0d376 className="text-white/70" style={{"width":"50%"}}>Price</span>
                       <span data-v-bfa0d376 className="font-bold flex items-center gap-2">
-                        <div data-v-bfa0d376>$123.00</div>
+                        <div data-v-bfa0d376>${gameData.price}</div>
                       </span>
                     </div>
                     <div data-v-bfa0d376 className="bg-white w-full opacity-10 h-px" />
@@ -134,11 +273,31 @@ export default function Product() {
                           <path data-v-bfa0d376 d="M14.2067 11.5894L11.697 9.70711V5.87292C11.697 5.4874 11.3854 5.17578 10.9999 5.17578C10.6144 5.17578 10.3027 5.4874 10.3027 5.87292V10.0557C10.3027 10.2753 10.4059 10.4824 10.5816 10.6134L13.3701 12.7048C13.4956 12.7989 13.642 12.8443 13.7877 12.8443C14.0003 12.8443 14.2094 12.7487 14.3461 12.5647C14.5776 12.2572 14.5148 11.8201 14.2067 11.5894Z" fill="#FFA300" />
                           <path data-v-bfa0d376 d="M10.9999 1C6.03707 1 2 5.03707 2 9.99994C2 14.9628 6.03707 18.9999 10.9999 18.9999C15.9628 18.9999 19.9999 14.9628 19.9999 9.99994C19.9999 5.03707 15.9628 1 10.9999 1ZM10.9999 17.6056C6.80671 17.6056 3.39425 14.1932 3.39425 9.99994C3.39425 5.80671 6.80671 2.39425 10.9999 2.39425C15.1939 2.39425 18.6056 5.80671 18.6056 9.99994C18.6056 14.1932 15.1932 17.6056 10.9999 17.6056Z" fill="#FFA300" />
                         </svg>
-                        <div data-v-bfa0d376>Instant</div>
+                        <div data-v-bfa0d376>{gameData.delivery}</div>
                       </span>
                     </div>
                     <div data-v-bfa0d376 className="bg-white w-full opacity-10 h-px" />
                   </div>
+
+
+                  <div data-v-bfa0d376>
+                    <div data-v-bfa0d376 className="flex p-3 justify-between no-wrap data-v-tooltip" data-v-tooltip="Guaranteed by the seller" style={{"gap":"0px 10px"}}>
+                      <div data-v-bfa0d376 className="flex items-center text-white/70" style={{"width":"50%"}}>
+                        <div data-v-bfa0d376>Duration Time</div>
+                        <img data-v-bfa0d376 className="w-4 ml-1 opacity-50" src={DeliveryIcon} />
+                      </div>
+                      <span data-v-bfa0d376 className="font-bold flex items-center gap-2">
+                        <svg data-v-bfa0d376 width={22} height={21} viewBox="0 0 22 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path data-v-bfa0d376 d="M14.2067 11.5894L11.697 9.70711V5.87292C11.697 5.4874 11.3854 5.17578 10.9999 5.17578C10.6144 5.17578 10.3027 5.4874 10.3027 5.87292V10.0557C10.3027 10.2753 10.4059 10.4824 10.5816 10.6134L13.3701 12.7048C13.4956 12.7989 13.642 12.8443 13.7877 12.8443C14.0003 12.8443 14.2094 12.7487 14.3461 12.5647C14.5776 12.2572 14.5148 11.8201 14.2067 11.5894Z" fill="#FFA300" />
+                          <path data-v-bfa0d376 d="M10.9999 1C6.03707 1 2 5.03707 2 9.99994C2 14.9628 6.03707 18.9999 10.9999 18.9999C15.9628 18.9999 19.9999 14.9628 19.9999 9.99994C19.9999 5.03707 15.9628 1 10.9999 1ZM10.9999 17.6056C6.80671 17.6056 3.39425 14.1932 3.39425 9.99994C3.39425 5.80671 6.80671 2.39425 10.9999 2.39425C15.1939 2.39425 18.6056 5.80671 18.6056 9.99994C18.6056 14.1932 15.1932 17.6056 10.9999 17.6056Z" fill="#FFA300" />
+                        </svg>
+                        <div data-v-bfa0d376>{gameData?.duration}</div>
+                      </span>
+                    </div>
+                    <div data-v-bfa0d376 className="bg-white w-full opacity-10 h-px" />
+                  </div>
+
+
                   {/**/}
                 </div>
               </div>
@@ -154,7 +313,7 @@ export default function Product() {
               <div data-v-bfa0d376 className="font-bold">Description</div>
             </div>
             <div data-v-bfa0d376 className="product-description py-6">
-              <p>asdasd</p>
+            { typeof(gameData?.desc) == "string" && parse(gameData?.desc)}
             </div>
           </div>
           {/**/}{/**/}
@@ -168,11 +327,11 @@ export default function Product() {
                 </svg>
                 <div data-v-bfa0d376 className="font-bold">Unit Price</div>
               </div>
-              <div data-v-bfa0d376 className="font-extrabold text-xl">$123.00</div>
+              <div data-v-bfa0d376 className="font-extrabold text-xl">${gameData.price}</div>
             </div>
             <div data-v-bfa0d376 className="flex flex-col items-center justify-center pt-6">
               {/**/}
-              <div data-v-bfa0d376 className="w-full mb-2">
+              <div onClick={() => setBuying(true)} data-v-bfa0d376 className="w-full mb-2">
                 <div data-v-1fb46fc5 data-v-bfa0d376 className="btn text-center cursor-pointer flex items-center justify-center" style={{"font-size":"18px","font-weight":"800","height":"40px","border-radius":"4px"}}>Buy Now</div>
               </div>
               <div data-v-bfa0d376 id="payment-request-button" style={{"width":"100%"}} />
