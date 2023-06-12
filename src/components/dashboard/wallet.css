@@ -1,0 +1,9 @@
+  .customModal {
+    background: #1F2332;
+    max-width: 500px;
+    width: 100%;
+  }
+
+  .react-select-container {
+    background-color: red !important;
+  }

@@ -15,6 +15,7 @@ import OrderIcon from '../img/icons/orders-icon.svg'
 import EditProfile from '../img/icons/settings-icon.svg'
 import SupportIcon from '../img/icons/inbox-icon.svg'
 import LogoutIcon from '../img/icons/logout-icon.svg'
+import Payments from '../img/icons/price-tag.svg'
 import SmallSearch from './smallSearch';
 import './header.css'
 import HandleOutsideClick  from 'react-outside-click-event'
@@ -27,9 +28,10 @@ import {useAuthUser} from 'react-auth-kit'
 
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
-import { isMobile } from 'react-device-detect';
+// import { isMobile } from 'react-device-detect';
 import ChatSound from '../sound/chat.mp3'
 import useSound from 'use-sound';
+import { useMediaQuery } from 'react-responsive';
 
 
 
@@ -42,10 +44,12 @@ const Header = forwardRef((props,ref) => {
   const searchInput = useRef(null)
   const [mobileSearch,setMobileSearch] = useState(false);
   const [play] = useSound(ChatSound);
+const isMobile = useMediaQuery({ query: `(max-width: 760px)` });
 
 useImperativeHandle(ref,() => ({
    focusSearch()  {
     if(isMobile) {
+      setMobileSearch(true)
 
     }else{
       searchInput.current.focus()
@@ -327,14 +331,15 @@ const CloseChat = () => {
      }
 
 
-{
-  mobileSearch && (
-   <SmallSearch  
-   close={() => {
-    setMobileSearch(false)
-   }}/> 
-  )
-}
+        {
+          mobileSearch && (
+          <SmallSearch  
+            games={games} 
+          close={() => {
+            setMobileSearch(false)
+          }}/> 
+          )
+        }
 
 
 
@@ -443,7 +448,7 @@ const CloseChat = () => {
                   </div>
                 </div>
               </div>
-              <div className="flex gap-16 md:gap-4" data-v-5315b842="">
+              <div className="flex gap-16 md:gap-4" data-v-5315b842="" onClick={() => setMobileSearch(true)}>
                 <div className="flex items-center gap-2" data-v-5315b842="">
                   <div
                     className="flex items-center gap-1 hidden sm:block"
@@ -598,7 +603,7 @@ const CloseChat = () => {
                   </div>
                 </div>
               </div>
-                <div className="flex gap-16 md:gap-4" data-v-5315b842>
+                <div className="flex gap-16 md:gap-4"   >
   <div className="flex items-center gap-2" data-v-5315b842>
     <div  onClick={() => {
     setMobileSearch(true)
@@ -755,7 +760,6 @@ const CloseChat = () => {
             </svg>
           </div> 
           )
-
         }
         {
           miniChatVisible && (
@@ -768,6 +772,7 @@ const CloseChat = () => {
                   goToChat={() => {
                     
                   }}
+                  currentUserId={auth()._id}
                   data={ChatData}
                 />
               </HandleOutsideClick>
@@ -994,10 +999,17 @@ const CloseChat = () => {
   </div>
   <div className="text-sm font-light text-white opacity-70 px-6 mb-2" style={{}}>My profile</div>
   <div className="px-2 mb-4" style={{}}>
-    <a href={"/dashboard/offers"} className>
+    {/* <a href={"/dashboard/offers"} className>
       <div className="flex items-center gap-3 py-3 cursor-pointer duration-300 rounded-lg px-4 hover:bg-white/5" style={{}}>
         <img src={OrderIcon} style={{"width":"18px","height":"18px"}} />
         <div className="font-bold">My orders</div>
+      </div>
+    </a> */}
+
+    <a href={"/dashboard/wallet"} className>
+      <div className="flex items-center gap-3 py-3 cursor-pointer duration-300 rounded-lg px-4 hover:bg-white/5" style={{}}>
+        <img src={Payments} style={{"width":"18px","height":"18px"}} />
+        <div className="font-bold">My Wallet</div>
       </div>
     </a>
     <a href="/dashboard/account" className>

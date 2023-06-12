@@ -55,7 +55,7 @@ export default function Product(props) {
   const [chatMessages,setChatMessages] = useState([])
   const [meta,setMetaData] = useState({name:'',id:''})
   const [test,setTest] = useState(false)
- 
+
 
   useEffect(() => {
     chatModal==true && (document.body.style.overflow = 'hidden')
@@ -145,7 +145,7 @@ const sendMessage = (msg) => {
             <div data-v-1fb46fc5 data-v-bfa0d376 className="btn text-center cursor-pointer secondary" style={{"padding":"5px 14px","font-size":"14px"}}>Edit</div>
           </a>
           <div data-v-bfa0d376 className="pl-4" onClick={() => {
-            navigate(-1)
+            navigate(-1,{replace:true})
           }}>
             <div data-v-1fb46fc5 data-v-bfa0d376 className="btn text-center cursor-pointer secondary" style={{"padding":"5px 14px","font-size":"14px"}}>Back</div>
           </div>
@@ -163,18 +163,18 @@ const sendMessage = (msg) => {
                 <div data-v-bfa0d376 className="grow flex flex-col justify-center cursor-pointer md:min-w-full min-w-[320px]" style={{"max-width":"300px",height:300}}>
                   <div data-v-bfa0d376 className="flex items-center grow" style={{"max-height":"250px",height:250}}>
                     
-                    {/* <img data-v-bfa0d376 src={gameData?.Image} format="webp" loading="lazy" className="mx-auto w-full rounded-lg" style={{"object-fit":"cover","height":"250px"}} /> */}
+                    <img data-v-bfa0d376 src={gameData?.Image+"100x100"} format="webp" loading="lazy" className="mx-auto w-full rounded-lg" style={{"object-fit":"cover","height":"250px"}} />
                     {/* <ProgressiveImage
                       preview={gameData?.Image+"_100x100"}
                       src={gameData?.Image}
                       render={(src, style) => <img data-v-bfa0d376 src={src}   className="mx-auto w-full rounded-lg" style={{"object-fit":"cover","height":"250px"}} />}
                   /> */}
             
-                                      <BlurImageLoader src={gameData?.Image} 
+                                      {/* <BlurImageLoader src={gameData?.Image} 
                         preview={gameData?.Image+"_100x100"} 
                         fullCover={true}
                         maxBlurLevel={10}
-                        transitionTime={400}/>
+                        transitionTime={400}/> */}
 
                     </div>
                   <div data-v-bfa0d376 className="grid grid-cols-3 items-center gap-2 mt-2">
@@ -189,7 +189,7 @@ const sendMessage = (msg) => {
                   <div data-v-bfa0d376 className="flex items-center mb-4 justify-between gap-8 relative">
                     <div data-v-bfa0d376 className="flex items-center gap-4">
                       <div data-v-bfa0d376>
-                        <img data-v-bfa0d376 src="https://assets.igitems.com/files/thumbnail_PYo8eaN7sGBGD4YDM9fZHpHtvtk9DuGh.png" format="webp" loading="lazy" className="rounded-full w-10 h-10" fit="cover" />{/**/}
+                        <img data-v-bfa0d376 src={API+"/user/userphoto?id=" + gameData?.PostedBy?._id} format="webp" loading="lazy" className="rounded-full w-10 h-10" fit="cover" />{/**/}
                       </div>
                       <div data-v-bfa0d376 className="flex flex-col">
                         <div data-v-bfa0d376 className="flex">

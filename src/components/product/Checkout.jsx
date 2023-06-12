@@ -1,4 +1,4 @@
-import React,{useEffect,useState} from 'react';
+import React,{useEffect,useState,useRef} from 'react';
 import PaypalIcon from '../../img/icons/paypal.png'
 import CryptoIcon from '../../img/icons/crypto.png'
 import ClockIcon from '../../img/icons/clock.svg'
@@ -11,16 +11,18 @@ import 'react-coinbase-commerce/dist/coinbase-commerce-button.css';
 export default function Checkout(props) {
   const [load, setLoad] = useState(true);
   const [PaymentType,setPaymentType] = useState(0)
+  const [checkoutID,setCheckoutId] = useState("")
+  const buttonRef = useRef(null)
 
 useEffect(() => {
 
-
-axios.post("https://api.commerce.coinbase.com/charges",{
-  name:'test',
-  description:'test',
+axios.post("https://api.commerce.coinbase.com/checkouts",{
+  name:'AutoMMService',
+  description:'AutoMMservice',
   pricing_type:'fixed_price',
+  requested_info:[],
   local_price:{
-    amount:10,
+    amount:props.gameData?.price,
     currency:'USD'
   },
 }, {
@@ -32,7 +34,7 @@ axios.post("https://api.commerce.coinbase.com/charges",{
   }
 })
 .then((response) => {
-  console.log(JSON.stringify(response.data));
+  setCheckoutId(response.data.data.id)
 })
 .catch((error) => {
   console.log(error);
@@ -40,7 +42,7 @@ axios.post("https://api.commerce.coinbase.com/charges",{
 
 
   
-})
+},[])
 
  
 
@@ -175,9 +177,33 @@ axios.post("https://api.commerce.coinbase.com/charges",{
               </div>
             </div>
             <div data-v-299c9395 className="w-full my-6 h-0.5" style={{"background":"rgba(47, 50, 64, 0.6)"}} />
-            <div data-v-1fb46fc5 data-v-299c9395 className="btn text-center cursor-pointer mb-2 flex items-center justify-center" style={{"border-radius":"4px","height":"40px"}}>Pay ${props.gameData?.price}</div>
 
-            <CoinbaseCommerceButton chargeId={'73bfdb54-4ee3-41f8-9b1e-9e2a5dc0fdc5'}/>
+            
+            {
+              PaymentType == 1 && (
+            <div onClick={() => {buttonRef.current.click()}} data-v-1fb46fc5 data-v-299c9395 className="btn text-center cursor-pointer mb-2 flex items-center justify-center" style={{"border-radius":"4px","height":"40px"}}>Pay ${props.gameData?.price}</div>
+              )
+            }
+
+            {
+              PaymentType == 0 && (
+            <CoinbaseCommerceButton 
+                wrapperStyle={{ width: '100%',background:'#ffa300',borderRadius:4 }}
+                 style={{
+                  width: '100%',
+                  color: '#000',
+                  borderRadius: 10,
+                  height: 40,
+                  cursor: 'pointer',
+                  fontSize:'16px',
+                  fontWeight:'700'
+                }}
+            checkoutId={checkoutID}>
+             Pay ${props.gameData?.price}
+              </CoinbaseCommerceButton>
+              )
+            }
+
             <div data-v-299c9395 className="block w-full" id="payment-request-button" />
             <div data-v-299c9395 className="mt-8">
               <label data-v-6ad32518 data-v-299c9395 className="flex items-center">

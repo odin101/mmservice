@@ -18,8 +18,6 @@ import {
   uploadBytesResumable 
 } from "firebase/storage";
 
-
-
 export default function Accounts() {
 
    const auth = useAuthUser()

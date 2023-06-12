@@ -1,5 +1,6 @@
 import React from 'react'
 import LimitedStock from '../img/icons/limited-stock.gif'
+import { Link } from 'react-router-dom'
 export default function smallSearch(props) {
   return (
 <div data-v-9f5b85b4>
@@ -33,178 +34,21 @@ export default function smallSearch(props) {
                         {/**/}{/**/}
                         <div data-v-b2745a4d className="relative order-1">
                           <div data-v-b2745a4d className="font-bold text-xs px-4 mb-2 mt-4 text-white/40">Categories</div>
-                          <a data-v-b2745a4d href="/clashofclans-account" className="flex items-center py-3 px-4 gap-4 no-wrap duration-300 hover" clickable>
+                          {
+                            props.games.map(gm => {
+                              return (
+
+                          <Link to={"/items/"+gm} onClick={() =>   props.close()} data-v-b2745a4d href="/clashofclans-account" className="flex items-center py-3 px-4 gap-4 no-wrap duration-300 hover" clickable>
                             <div data-v-b2745a4d className="flex items-center gap-2">
                               <img data-v-b2745a4d src={LimitedStock} width={16} height={16} alt style={{"width":"16px"}} />
-                              <div data-v-b2745a4d>CoC</div>
+                              <div data-v-b2745a4d>{gm}</div>
                             </div>
-                          </a><div data-v-b2745a4d className="flex items-center gap-2 opacity-70"><a data-v-b2745a4d href="/clashofclans-account" className="flex items-center py-3 px-4 gap-4 no-wrap duration-300 hover" clickable>
-                            </a><a data-v-b2745a4d href="/clashofclans-account" className="flex gap-1 items-center group"><img data-v-b2745a4d className="object-contain" src="/img/icons/account-icon-white.svg" loading="lazy" format="webp" fit="contain" style={{"width":"16px","height":"16px"}} /><div data-v-b2745a4d className="text-xs hidden group-hover:block">Accounts</div></a><a data-v-b2745a4d href="/clashofclans-item" className="flex gap-1 items-center group"><img data-v-b2745a4d className="object-contain" src="/img/icons/item-icon-white.svg" loading="lazy" format="webp" fit="contain" style={{"width":"16px","height":"16px"}} /><div data-v-b2745a4d className="text-xs hidden group-hover:block">Items / Skins</div></a><a data-v-b2745a4d href="/clashofclans-currency" className="flex gap-1 items-center group"><img data-v-b2745a4d className="object-contain" src="/img/icons/currency-icon-white.svg" loading="lazy" format="webp" fit="contain" style={{"width":"16px","height":"16px"}} /><div data-v-b2745a4d className="text-xs hidden group-hover:block">Currency</div></a><a data-v-b2745a4d href="/clashofclans-boost" className="flex gap-1 items-center group"><img data-v-b2745a4d className="object-contain" src="/img/icons/boost-icon-white.svg" loading="lazy" format="webp" fit="contain" style={{"width":"16px","height":"16px"}} /><div data-v-b2745a4d className="text-xs hidden group-hover:block">PlayBoost</div></a><a data-v-b2745a4d href="/clashofclans-coaching" className="flex gap-1 items-center group"><img data-v-b2745a4d className="object-contain" src="/img/icons/coaching-icon-white.svg" loading="lazy" format="webp" fit="contain" style={{"width":"16px","height":"16px"}} /><div data-v-b2745a4d className="text-xs hidden group-hover:block">Coaching</div></a></div>
-                          <a data-v-b2745a4d href="/fortnite-account" className="flex items-center py-3 px-4 gap-4 no-wrap duration-300 hover" clickable>
-                            <div data-v-b2745a4d className="flex items-center gap-2">
-                              <img data-v-b2745a4d 
-                             src={LimitedStock}  width={16} height={16} alt style={{"width":"16px"}} />
-                              <div data-v-b2745a4d>Fortnite</div>
-                            </div>
-                          </a><div data-v-b2745a4d className="flex items-center gap-2 opacity-70"><a data-v-b2745a4d href="/fortnite-account" className="flex items-center py-3 px-4 gap-4 no-wrap duration-300 hover" clickable>
-                            </a><a data-v-b2745a4d href="/fortnite-account" className="flex gap-1 items-center group"><img data-v-b2745a4d className="object-contain" src="/img/icons/account-icon-white.svg" loading="lazy" format="webp" fit="contain" style={{"width":"16px","height":"16px"}} /><div data-v-b2745a4d className="text-xs hidden group-hover:block">Accounts</div></a><a data-v-b2745a4d href="/fortnite-currency" className="flex gap-1 items-center group"><img data-v-b2745a4d className="object-contain" src="/img/icons/currency-icon-white.svg" loading="lazy" format="webp" fit="contain" style={{"width":"16px","height":"16px"}} /><div data-v-b2745a4d className="text-xs hidden group-hover:block">Currency</div></a><a data-v-b2745a4d href="/fortnite-item" className="flex gap-1 items-center group"><img data-v-b2745a4d className="object-contain" src="/img/icons/item-icon-white.svg" loading="lazy" format="webp" fit="contain" style={{"width":"16px","height":"16px"}} /><div data-v-b2745a4d className="text-xs hidden group-hover:block">Items / Skins</div></a><a data-v-b2745a4d href="/fortnite-coaching" className="flex gap-1 items-center group"><img data-v-b2745a4d className="object-contain" src="/img/icons/coaching-icon-white.svg" loading="lazy" format="webp" fit="contain" style={{"width":"16px","height":"16px"}} /><div data-v-b2745a4d className="text-xs hidden group-hover:block">Coaching</div></a></div>
-                          <a data-v-b2745a4d href="/genshinimpact-account" className="flex items-center py-3 px-4 gap-4 no-wrap duration-300 hover" clickable>
-                            <div data-v-b2745a4d className="flex items-center gap-2">
-                              <img data-v-b2745a4d 
-                              src={LimitedStock}
-                               width={16} height={16} alt style={{"width":"16px"}} />
-                              <div data-v-b2745a4d>Genshin Impact</div>
-                            </div>
-                          </a><div data-v-b2745a4d className="flex items-center gap-2 opacity-70"><a data-v-b2745a4d href="/genshinimpact-account" className="flex items-center py-3 px-4 gap-4 no-wrap duration-300 hover" clickable>
-                            </a><a data-v-b2745a4d href="/genshinimpact-account" className="flex gap-1 items-center group"><img data-v-b2745a4d className="object-contain" src="/img/icons/account-icon-white.svg" loading="lazy" format="webp" fit="contain" style={{"width":"16px","height":"16px"}} /><div data-v-b2745a4d className="text-xs hidden group-hover:block">Accounts</div></a><a data-v-b2745a4d href="/genshinimpact-boost" className="flex gap-1 items-center group"><img data-v-b2745a4d className="object-contain" src="/img/icons/boost-icon-white.svg" loading="lazy" format="webp" fit="contain" style={{"width":"16px","height":"16px"}} /><div data-v-b2745a4d className="text-xs hidden group-hover:block">PlayBoost</div></a></div>
-                          <a data-v-b2745a4d href="/roblox-item" className="flex items-center py-3 px-4 gap-4 no-wrap duration-300 hover" clickable>
-                            <div data-v-b2745a4d className="flex items-center gap-2">
-                              <img 
-                              src={LimitedStock}
-                               width={16} height={16} alt style={{"width":"16px"}} />
-                              <div data-v-b2745a4d>Roblox</div>
-                            </div>
-                          </a><div data-v-b2745a4d className="flex items-center gap-2 opacity-70"><a data-v-b2745a4d href="/roblox-item" className="flex items-center py-3 px-4 gap-4 no-wrap duration-300 hover" clickable>
-                            </a><a data-v-b2745a4d href="/roblox-item" className="flex gap-1 items-center group"><img data-v-b2745a4d className="object-contain" src="/img/icons/item-icon-white.svg" loading="lazy" format="webp" fit="contain" style={{"width":"16px","height":"16px"}} /><div data-v-b2745a4d className="text-xs hidden group-hover:block">Items / Skins</div></a><a data-v-b2745a4d href="/roblox-account" className="flex gap-1 items-center group"><img data-v-b2745a4d className="object-contain" src="/img/icons/account-icon-white.svg" loading="lazy" format="webp" fit="contain" style={{"width":"16px","height":"16px"}} /><div data-v-b2745a4d className="text-xs hidden group-hover:block">Accounts</div></a></div>
-                          <a data-v-b2745a4d href="/valorant-account" className="flex items-center py-3 px-4 gap-4 no-wrap duration-300 hover" clickable>
-                            <div data-v-b2745a4d className="flex items-center gap-2">
-                              <img 
-                              src={LimitedStock}
-                               width={16} height={16} alt style={{"width":"16px"}} />
-                              <div data-v-b2745a4d>Valorant</div>
-                            </div>
-                          </a>
-                          <div data-v-b2745a4d className="flex items-center gap-2 opacity-70"><a data-v-b2745a4d href="/valorant-account" className="flex items-center py-3 px-4 gap-4 no-wrap duration-300 hover" clickable>
-                            </a><a data-v-b2745a4d href="/valorant-account" className="flex gap-1 items-center group"><img data-v-b2745a4d className="object-contain" src="/img/icons/account-icon-white.svg" loading="lazy" format="webp" fit="contain" style={{"width":"16px","height":"16px"}} /><div data-v-b2745a4d className="text-xs hidden group-hover:block">Accounts</div></a><a data-v-b2745a4d href="/valorant-boost" className="flex gap-1 items-center group"><img data-v-b2745a4d className="object-contain" src="/img/icons/boost-icon-white.svg" loading="lazy" format="webp" fit="contain" style={{"width":"16px","height":"16px"}} /><div data-v-b2745a4d className="text-xs hidden group-hover:block">PlayBoost</div></a><a data-v-b2745a4d href="/valorant-coaching" className="flex gap-1 items-center group"><img data-v-b2745a4d className="object-contain" src="/img/icons/coaching-icon-white.svg" loading="lazy" format="webp" fit="contain" style={{"width":"16px","height":"16px"}} /><div data-v-b2745a4d className="text-xs hidden group-hover:block">Coaching</div></a><a data-v-b2745a4d href="/valorant-currency" className="flex gap-1 items-center group"><img data-v-b2745a4d className="object-contain" src="/img/icons/currency-icon-white.svg" loading="lazy" format="webp" fit="contain" style={{"width":"16px","height":"16px"}} /><div data-v-b2745a4d className="text-xs hidden group-hover:block">Currency</div></a></div>
-                          <a data-v-b2745a4d href="/8ballpool-account" className="flex items-center py-3 px-4 gap-4 no-wrap duration-300 hover" clickable>
-                            <div data-v-b2745a4d className="flex items-center gap-2">
-                              {/**/}
-                              <div data-v-b2745a4d>8 Ball Pool</div>
-                            </div>
-                          </a><div data-v-b2745a4d className="flex items-center gap-2 opacity-70"><a data-v-b2745a4d href="/8ballpool-account" className="flex items-center py-3 px-4 gap-4 no-wrap duration-300 hover" clickable>
-                            </a><a data-v-b2745a4d href="/8ballpool-account" className="flex gap-1 items-center group"><img data-v-b2745a4d className="object-contain" src="/img/icons/account-icon-white.svg" loading="lazy" format="webp" fit="contain" style={{"width":"16px","height":"16px"}} /><div data-v-b2745a4d className="text-xs hidden group-hover:block">Accounts</div></a><a data-v-b2745a4d href="/8ballpool-coins" className="flex gap-1 items-center group"><img data-v-b2745a4d className="object-contain" src="/img/icons/currency-icon-white.svg" loading="lazy" format="webp" fit="contain" style={{"width":"16px","height":"16px"}} /><div data-v-b2745a4d className="text-xs hidden group-hover:block">Currency</div></a><a data-v-b2745a4d href="/8ballpool-boost" className="flex gap-1 items-center group"><img data-v-b2745a4d className="object-contain" src="/img/icons/boost-icon-white.svg" loading="lazy" format="webp" fit="contain" style={{"width":"16px","height":"16px"}} /><div data-v-b2745a4d className="text-xs hidden group-hover:block">PlayBoost</div></a></div>
-                          <a data-v-b2745a4d href="/ark-item" className="flex items-center py-3 px-4 gap-4 no-wrap duration-300 hover" clickable>
-                            <div data-v-b2745a4d className="flex items-center gap-2">
-                              {/**/}
-                              <div data-v-b2745a4d>ARK</div>
-                            </div>
-                          </a><div data-v-b2745a4d className="flex items-center gap-2 opacity-70"><a data-v-b2745a4d href="/ark-item" className="flex items-center py-3 px-4 gap-4 no-wrap duration-300 hover" clickable>
-                            </a><a data-v-b2745a4d href="/ark-item" className="flex gap-1 items-center group"><img data-v-b2745a4d className="object-contain" src="/img/icons/item-icon-white.svg" loading="lazy" format="webp" fit="contain" style={{"width":"16px","height":"16px"}} /><div data-v-b2745a4d className="text-xs hidden group-hover:block">Items / Skins</div></a><a data-v-b2745a4d href="/ark-account" className="flex gap-1 items-center group"><img data-v-b2745a4d className="object-contain" src="/img/icons/account-icon-white.svg" loading="lazy" format="webp" fit="contain" style={{"width":"16px","height":"16px"}} /><div data-v-b2745a4d className="text-xs hidden group-hover:block">Accounts</div></a></div>
-                          <a data-v-b2745a4d href="/albion-item" className="flex items-center py-3 px-4 gap-4 no-wrap duration-300 hover" clickable>
-                            <div data-v-b2745a4d className="flex items-center gap-2">
-                              {/**/}
-                              <div data-v-b2745a4d>Albion Online</div>
-                            </div>
-                          </a><div data-v-b2745a4d className="flex items-center gap-2 opacity-70"><a data-v-b2745a4d href="/albion-item" className="flex items-center py-3 px-4 gap-4 no-wrap duration-300 hover" clickable>
-                            </a><a data-v-b2745a4d href="/albion-item" className="flex gap-1 items-center group"><img data-v-b2745a4d className="object-contain" src="/img/icons/item-icon-white.svg" loading="lazy" format="webp" fit="contain" style={{"width":"16px","height":"16px"}} /><div data-v-b2745a4d className="text-xs hidden group-hover:block">Items / Skins</div></a><a data-v-b2745a4d href="/albion-currency" className="flex gap-1 items-center group"><img data-v-b2745a4d className="object-contain" src="/img/icons/currency-icon-white.svg" loading="lazy" format="webp" fit="contain" style={{"width":"16px","height":"16px"}} /><div data-v-b2745a4d className="text-xs hidden group-hover:block">Currency</div></a><a data-v-b2745a4d href="/albion-account" className="flex gap-1 items-center group"><img data-v-b2745a4d className="object-contain" src="/img/icons/account-icon-white.svg" loading="lazy" format="webp" fit="contain" style={{"width":"16px","height":"16px"}} /><div data-v-b2745a4d className="text-xs hidden group-hover:block">Accounts</div></a></div>
-                          <a data-v-b2745a4d href="/acnh-item" className="flex items-center py-3 px-4 gap-4 no-wrap duration-300 hover" clickable>
-                            <div data-v-b2745a4d className="flex items-center gap-2">
-                              {/**/}
-                              <div data-v-b2745a4d>Animal Crossing</div>
-                            </div>
-                          </a><div data-v-b2745a4d className="flex items-center gap-2 opacity-70"><a data-v-b2745a4d href="/acnh-item" className="flex items-center py-3 px-4 gap-4 no-wrap duration-300 hover" clickable>
-                            </a><a data-v-b2745a4d href="/acnh-item" className="flex gap-1 items-center group"><img data-v-b2745a4d className="object-contain" src="/img/icons/item-icon-white.svg" loading="lazy" format="webp" fit="contain" style={{"width":"16px","height":"16px"}} /><div data-v-b2745a4d className="text-xs hidden group-hover:block">Items / Skins</div></a></div>
-                          <a data-v-b2745a4d href="/apexlegends-account" className="flex items-center py-3 px-4 gap-4 no-wrap duration-300 hover" clickable>
-                            <div data-v-b2745a4d className="flex items-center gap-2">
-                              {/**/}
-                              <div data-v-b2745a4d>Apex Legends</div>
-                            </div>
-                          </a><div data-v-b2745a4d className="flex items-center gap-2 opacity-70"><a data-v-b2745a4d href="/apexlegends-account" className="flex items-center py-3 px-4 gap-4 no-wrap duration-300 hover" clickable>
-                            </a><a data-v-b2745a4d href="/apexlegends-account" className="flex gap-1 items-center group"><img data-v-b2745a4d className="object-contain" src="/img/icons/account-icon-white.svg" loading="lazy" format="webp" fit="contain" style={{"width":"16px","height":"16px"}} /><div data-v-b2745a4d className="text-xs hidden group-hover:block">Accounts</div></a><a data-v-b2745a4d href="/apexlegends-boost" className="flex gap-1 items-center group"><img data-v-b2745a4d className="object-contain" src="/img/icons/boost-icon-white.svg" loading="lazy" format="webp" fit="contain" style={{"width":"16px","height":"16px"}} /><div data-v-b2745a4d className="text-xs hidden group-hover:block">PlayBoost</div></a><a data-v-b2745a4d href="/apexlegends-coaching" className="flex gap-1 items-center group"><img data-v-b2745a4d className="object-contain" src="/img/icons/coaching-icon-white.svg" loading="lazy" format="webp" fit="contain" style={{"width":"16px","height":"16px"}} /><div data-v-b2745a4d className="text-xs hidden group-hover:block">Coaching</div></a></div>
-                          <a data-v-b2745a4d href="/archeage-item" className="flex items-center py-3 px-4 gap-4 no-wrap duration-300 hover" clickable>
-                            <div data-v-b2745a4d className="flex items-center gap-2">
-                              {/**/}
-                              <div data-v-b2745a4d>ArcheAge</div>
-                            </div>
-                          </a><div data-v-b2745a4d className="flex items-center gap-2 opacity-70"><a data-v-b2745a4d href="/archeage-item" className="flex items-center py-3 px-4 gap-4 no-wrap duration-300 hover" clickable>
-                            </a><a data-v-b2745a4d href="/archeage-item" className="flex gap-1 items-center group"><img data-v-b2745a4d className="object-contain" src="/img/icons/item-icon-white.svg" loading="lazy" format="webp" fit="contain" style={{"width":"16px","height":"16px"}} /><div data-v-b2745a4d className="text-xs hidden group-hover:block">Items / Skins</div></a><a data-v-b2745a4d href="/archeage-boost" className="flex gap-1 items-center group"><img data-v-b2745a4d className="object-contain" src="/img/icons/boost-icon-white.svg" loading="lazy" format="webp" fit="contain" style={{"width":"16px","height":"16px"}} /><div data-v-b2745a4d className="text-xs hidden group-hover:block">PlayBoost</div></a><a data-v-b2745a4d href="/archeage-gold" className="flex gap-1 items-center group"><img data-v-b2745a4d className="object-contain" src="/img/icons/currency-icon-white.svg" loading="lazy" format="webp" fit="contain" style={{"width":"16px","height":"16px"}} /><div data-v-b2745a4d className="text-xs hidden group-hover:block">Currency</div></a></div>
-                          <a data-v-b2745a4d href="/arma_3-account" className="flex items-center py-3 px-4 gap-4 no-wrap duration-300 hover" clickable>
-                            <div data-v-b2745a4d className="flex items-center gap-2">
-                              {/**/}
-                              <div data-v-b2745a4d>Arma 3</div>
-                            </div>
-                          </a><div data-v-b2745a4d className="flex items-center gap-2 opacity-70"><a data-v-b2745a4d href="/arma_3-account" className="flex items-center py-3 px-4 gap-4 no-wrap duration-300 hover" clickable>
-                            </a><a data-v-b2745a4d href="/arma_3-account" className="flex gap-1 items-center group"><img data-v-b2745a4d className="object-contain" src="/img/icons/account-icon-white.svg" loading="lazy" format="webp" fit="contain" style={{"width":"16px","height":"16px"}} /><div data-v-b2745a4d className="text-xs hidden group-hover:block">Accounts</div></a></div>
-                          <a data-v-b2745a4d href="/blackdesertonline-boost" className="flex items-center py-3 px-4 gap-4 no-wrap duration-300 hover" clickable>
-                            <div data-v-b2745a4d className="flex items-center gap-2">
-                              {/**/}
-                              <div data-v-b2745a4d>Black Desert Online</div>
-                            </div>
-                          </a><div data-v-b2745a4d className="flex items-center gap-2 opacity-70"><a data-v-b2745a4d href="/blackdesertonline-boost" className="flex items-center py-3 px-4 gap-4 no-wrap duration-300 hover" clickable>
-                            </a><a data-v-b2745a4d href="/blackdesertonline-boost" className="flex gap-1 items-center group"><img data-v-b2745a4d className="object-contain" src="/img/icons/boost-icon-white.svg" loading="lazy" format="webp" fit="contain" style={{"width":"16px","height":"16px"}} /><div data-v-b2745a4d className="text-xs hidden group-hover:block">PlayBoost</div></a><a data-v-b2745a4d href="/blackdesertonline-account" className="flex gap-1 items-center group"><img data-v-b2745a4d className="object-contain" src="/img/icons/account-icon-white.svg" loading="lazy" format="webp" fit="contain" style={{"width":"16px","height":"16px"}} /><div data-v-b2745a4d className="text-xs hidden group-hover:block">Accounts</div></a></div>
-                          <a data-v-b2745a4d href="/brawl_stars-account" className="flex items-center py-3 px-4 gap-4 no-wrap duration-300 hover" clickable>
-                            <div data-v-b2745a4d className="flex items-center gap-2">
-                              {/**/}
-                              <div data-v-b2745a4d>Brawl Stars</div>
-                            </div>
-                          </a><div data-v-b2745a4d className="flex items-center gap-2 opacity-70"><a data-v-b2745a4d href="/brawl_stars-account" className="flex items-center py-3 px-4 gap-4 no-wrap duration-300 hover" clickable>
-                            </a><a data-v-b2745a4d href="/brawl_stars-account" className="flex gap-1 items-center group"><img data-v-b2745a4d className="object-contain" src="/img/icons/account-icon-white.svg" loading="lazy" format="webp" fit="contain" style={{"width":"16px","height":"16px"}} /><div data-v-b2745a4d className="text-xs hidden group-hover:block">Accounts</div></a></div>
-                          <a data-v-b2745a4d href="/codm-account" className="flex items-center py-3 px-4 gap-4 no-wrap duration-300 hover" clickable>
-                            <div data-v-b2745a4d className="flex items-center gap-2">
-                              {/**/}
-                              <div data-v-b2745a4d>Call of Duty Mobile </div>
-                            </div>
-                          </a><div data-v-b2745a4d className="flex items-center gap-2 opacity-70"><a data-v-b2745a4d href="/codm-account" className="flex items-center py-3 px-4 gap-4 no-wrap duration-300 hover" clickable>
-                            </a><a data-v-b2745a4d href="/codm-account" className="flex gap-1 items-center group"><img data-v-b2745a4d className="object-contain" src="/img/icons/account-icon-white.svg" loading="lazy" format="webp" fit="contain" style={{"width":"16px","height":"16px"}} /><div data-v-b2745a4d className="text-xs hidden group-hover:block">Accounts</div></a><a data-v-b2745a4d href="/codm-item" className="flex gap-1 items-center group"><img data-v-b2745a4d className="object-contain" src="/img/icons/item-icon-white.svg" loading="lazy" format="webp" fit="contain" style={{"width":"16px","height":"16px"}} /><div data-v-b2745a4d className="text-xs hidden group-hover:block">Items / Skins</div></a><a data-v-b2745a4d href="/codm-boost" className="flex gap-1 items-center group"><img data-v-b2745a4d className="object-contain" src="/img/icons/boost-icon-white.svg" loading="lazy" format="webp" fit="contain" style={{"width":"16px","height":"16px"}} /><div data-v-b2745a4d className="text-xs hidden group-hover:block">PlayBoost</div></a></div>
-                          <a data-v-b2745a4d href="/clashroyale-account" className="flex items-center py-3 px-4 gap-4 no-wrap duration-300 hover" clickable>
-                            <div data-v-b2745a4d className="flex items-center gap-2">
-                              {/**/}
-                              <div data-v-b2745a4d>Clash Royale</div>
-                            </div>
-                          </a><div data-v-b2745a4d className="flex items-center gap-2 opacity-70"><a data-v-b2745a4d href="/clashroyale-account" className="flex items-center py-3 px-4 gap-4 no-wrap duration-300 hover" clickable>
-                            </a><a data-v-b2745a4d href="/clashroyale-account" className="flex gap-1 items-center group"><img data-v-b2745a4d className="object-contain" src="/img/icons/account-icon-white.svg" loading="lazy" format="webp" fit="contain" style={{"width":"16px","height":"16px"}} /><div data-v-b2745a4d className="text-xs hidden group-hover:block">Accounts</div></a><a data-v-b2745a4d href="/clashroyale-item" className="flex gap-1 items-center group"><img data-v-b2745a4d className="object-contain" src="/img/icons/item-icon-white.svg" loading="lazy" format="webp" fit="contain" style={{"width":"16px","height":"16px"}} /><div data-v-b2745a4d className="text-xs hidden group-hover:block">Items / Skins</div></a><a data-v-b2745a4d href="/clashroyale-boost" className="flex gap-1 items-center group"><img data-v-b2745a4d className="object-contain" src="/img/icons/boost-icon-white.svg" loading="lazy" format="webp" fit="contain" style={{"width":"16px","height":"16px"}} /><div data-v-b2745a4d className="text-xs hidden group-hover:block">PlayBoost</div></a></div>
-                          <a data-v-b2745a4d href="/csgo-item" className="flex items-center py-3 px-4 gap-4 no-wrap duration-300 hover" clickable>
-                            <div data-v-b2745a4d className="flex items-center gap-2">
-                              {/**/}
-                              <div data-v-b2745a4d>Counter Strike GO</div>
-                            </div>
-                          </a><div data-v-b2745a4d className="flex items-center gap-2 opacity-70"><a data-v-b2745a4d href="/csgo-item" className="flex items-center py-3 px-4 gap-4 no-wrap duration-300 hover" clickable>
-                            </a><a data-v-b2745a4d href="/csgo-item" className="flex gap-1 items-center group"><img data-v-b2745a4d className="object-contain" src="/img/icons/item-icon-white.svg" loading="lazy" format="webp" fit="contain" style={{"width":"16px","height":"16px"}} /><div data-v-b2745a4d className="text-xs hidden group-hover:block">Items / Skins</div></a><a data-v-b2745a4d href="/csgo-coaching" className="flex gap-1 items-center group"><img data-v-b2745a4d className="object-contain" src="/img/icons/coaching-icon-white.svg" loading="lazy" format="webp" fit="contain" style={{"width":"16px","height":"16px"}} /><div data-v-b2745a4d className="text-xs hidden group-hover:block">Coaching</div></a><a data-v-b2745a4d href="/csgo-account" className="flex gap-1 items-center group"><img data-v-b2745a4d className="object-contain" src="/img/icons/account-icon-white.svg" loading="lazy" format="webp" fit="contain" style={{"width":"16px","height":"16px"}} /><div data-v-b2745a4d className="text-xs hidden group-hover:block">Accounts</div></a></div>
-                          <a data-v-b2745a4d href="/dayz-account" className="flex items-center py-3 px-4 gap-4 no-wrap duration-300 hover" clickable>
-                            <div data-v-b2745a4d className="flex items-center gap-2">
-                              {/**/}
-                              <div data-v-b2745a4d>Dayz</div>
-                            </div>
-                          </a><div data-v-b2745a4d className="flex items-center gap-2 opacity-70"><a data-v-b2745a4d href="/dayz-account" className="flex items-center py-3 px-4 gap-4 no-wrap duration-300 hover" clickable>
-                            </a><a data-v-b2745a4d href="/dayz-account" className="flex gap-1 items-center group"><img data-v-b2745a4d className="object-contain" src="/img/icons/account-icon-white.svg" loading="lazy" format="webp" fit="contain" style={{"width":"16px","height":"16px"}} /><div data-v-b2745a4d className="text-xs hidden group-hover:block">Accounts</div></a></div>
-                          <a data-v-b2745a4d href="/de2-coaching" className="flex items-center py-3 px-4 gap-4 no-wrap duration-300 hover" clickable>
-                            <div data-v-b2745a4d className="flex items-center gap-2">
-                              {/**/}
-                              <div data-v-b2745a4d>Destiny 2</div>
-                            </div>
-                          </a><div data-v-b2745a4d className="flex items-center gap-2 opacity-70"><a data-v-b2745a4d href="/de2-coaching" className="flex items-center py-3 px-4 gap-4 no-wrap duration-300 hover" clickable>
-                            </a><a data-v-b2745a4d href="/de2-coaching" className="flex gap-1 items-center group"><img data-v-b2745a4d className="object-contain" src="/img/icons/coaching-icon-white.svg" loading="lazy" format="webp" fit="contain" style={{"width":"16px","height":"16px"}} /><div data-v-b2745a4d className="text-xs hidden group-hover:block">Coaching</div></a></div>
-                          <a data-v-b2745a4d href="/diabloiv-item" className="flex items-center py-3 px-4 gap-4 no-wrap duration-300 hover" clickable>
-                            <div data-v-b2745a4d className="flex items-center gap-2">
-                              {/**/}
-                              <div data-v-b2745a4d>Diablo 4</div>
-                            </div>
-                          </a><div data-v-b2745a4d className="flex items-center gap-2 opacity-70"><a data-v-b2745a4d href="/diabloiv-item" className="flex items-center py-3 px-4 gap-4 no-wrap duration-300 hover" clickable>
-                            </a><a data-v-b2745a4d href="/diabloiv-item" className="flex gap-1 items-center group"><img data-v-b2745a4d className="object-contain" src="/img/icons/item-icon-white.svg" loading="lazy" format="webp" fit="contain" style={{"width":"16px","height":"16px"}} /><div data-v-b2745a4d className="text-xs hidden group-hover:block">Items / Skins</div></a><a data-v-b2745a4d href="/diabloiv-account" className="flex gap-1 items-center group"><img data-v-b2745a4d className="object-contain" src="/img/icons/account-icon-white.svg" loading="lazy" format="webp" fit="contain" style={{"width":"16px","height":"16px"}} /><div data-v-b2745a4d className="text-xs hidden group-hover:block">Accounts</div></a><a data-v-b2745a4d href="/diabloiv-gold" className="flex gap-1 items-center group"><img data-v-b2745a4d className="object-contain" src="/img/icons/currency-icon-white.svg" loading="lazy" format="webp" fit="contain" style={{"width":"16px","height":"16px"}} /><div data-v-b2745a4d className="text-xs hidden group-hover:block">Currency</div></a></div>
-                          <a data-v-b2745a4d href="/diablo2-item" className="flex items-center py-3 px-4 gap-4 no-wrap duration-300 hover" clickable>
-                            <div data-v-b2745a4d className="flex items-center gap-2">
-                              {/**/}
-                              <div data-v-b2745a4d>Diablo II Resurrected</div>
-                            </div>
-                          </a><div data-v-b2745a4d className="flex items-center gap-2 opacity-70"><a data-v-b2745a4d href="/diablo2-item" className="flex items-center py-3 px-4 gap-4 no-wrap duration-300 hover" clickable>
-                            </a><a data-v-b2745a4d href="/diablo2-item" className="flex gap-1 items-center group"><img data-v-b2745a4d className="object-contain" src="/img/icons/item-icon-white.svg" loading="lazy" format="webp" fit="contain" style={{"width":"16px","height":"16px"}} /><div data-v-b2745a4d className="text-xs hidden group-hover:block">Items / Skins</div></a><a data-v-b2745a4d href="/diablo2-boost" className="flex gap-1 items-center group"><img data-v-b2745a4d className="object-contain" src="/img/icons/boost-icon-white.svg" loading="lazy" format="webp" fit="contain" style={{"width":"16px","height":"16px"}} /><div data-v-b2745a4d className="text-xs hidden group-hover:block">PlayBoost</div></a><a data-v-b2745a4d href="/diablo2-account" className="flex gap-1 items-center group"><img data-v-b2745a4d className="object-contain" src="/img/icons/account-icon-white.svg" loading="lazy" format="webp" fit="contain" style={{"width":"16px","height":"16px"}} /><div data-v-b2745a4d className="text-xs hidden group-hover:block">Accounts</div></a><a data-v-b2745a4d href="/diablo2-gold" className="flex gap-1 items-center group"><img data-v-b2745a4d className="object-contain" src="/img/icons/currency-icon-white.svg" loading="lazy" format="webp" fit="contain" style={{"width":"16px","height":"16px"}} /><div data-v-b2745a4d className="text-xs hidden group-hover:block">Currency</div></a></div>
-                          <a data-v-b2745a4d href="/diablo_immortal-boost" className="flex items-center py-3 px-4 gap-4 no-wrap duration-300 hover" clickable>
-                            <div data-v-b2745a4d className="flex items-center gap-2">
-                              {/**/}
-                              <div data-v-b2745a4d>Diablo Immortal</div>
-                            </div>
-                          </a><div data-v-b2745a4d className="flex items-center gap-2 opacity-70"><a data-v-b2745a4d href="/diablo_immortal-boost" className="flex items-center py-3 px-4 gap-4 no-wrap duration-300 hover" clickable>
-                            </a><a data-v-b2745a4d href="/diablo_immortal-boost" className="flex gap-1 items-center group"><img data-v-b2745a4d className="object-contain" src="/img/icons/boost-icon-white.svg" loading="lazy" format="webp" fit="contain" style={{"width":"16px","height":"16px"}} /><div data-v-b2745a4d className="text-xs hidden group-hover:block">PlayBoost</div></a><a data-v-b2745a4d href="/diablo_immortal-account" className="flex gap-1 items-center group"><img data-v-b2745a4d className="object-contain" src="/img/icons/account-icon-white.svg" loading="lazy" format="webp" fit="contain" style={{"width":"16px","height":"16px"}} /><div data-v-b2745a4d className="text-xs hidden group-hover:block">Accounts</div></a></div>
-                          <a data-v-b2745a4d href="/dislyte-account" className="flex items-center py-3 px-4 gap-4 no-wrap duration-300 hover" clickable>
-                            <div data-v-b2745a4d className="flex items-center gap-2">
-                              {/**/}
-                              <div data-v-b2745a4d>Dislyte</div>
-                            </div>
-                          </a><div data-v-b2745a4d className="flex items-center gap-2 opacity-70"><a data-v-b2745a4d href="/dislyte-account" className="flex items-center py-3 px-4 gap-4 no-wrap duration-300 hover" clickable>
-                            </a><a data-v-b2745a4d href="/dislyte-account" className="flex gap-1 items-center group"><img data-v-b2745a4d className="object-contain" src="/img/icons/account-icon-white.svg" loading="lazy" format="webp" fit="contain" style={{"width":"16px","height":"16px"}} /><div data-v-b2745a4d className="text-xs hidden group-hover:block">Accounts</div></a></div>
+                          </Link>
+                              )
+
+                            })
+                          }
                         
-                          <div data-v-b2745a4d className="flex items-center gap-2 opacity-70"><a data-v-b2745a4d href="/wowclassic-boost" className="flex items-center py-3 px-4 gap-4 no-wrap duration-300 hover" clickable>
-                            </a><a data-v-b2745a4d href="/wowclassic-boost" className="flex gap-1 items-center group"><img data-v-b2745a4d className="object-contain" src="/img/icons/boost-icon-white.svg" loading="lazy" format="webp" fit="contain" style={{"width":"16px","height":"16px"}} /><div data-v-b2745a4d className="text-xs hidden group-hover:block">PlayBoost</div></a><a data-v-b2745a4d href="/wowclassic-gold" className="flex gap-1 items-center group"><img data-v-b2745a4d className="object-contain" src="/img/icons/currency-icon-white.svg" loading="lazy" format="webp" fit="contain" style={{"width":"16px","height":"16px"}} /><div data-v-b2745a4d className="text-xs hidden group-hover:block">Currency</div></a><a data-v-b2745a4d href="/wowclassic-item" className="flex gap-1 items-center group"><img data-v-b2745a4d className="object-contain" src="/img/icons/item-icon-white.svg" loading="lazy" format="webp" fit="contain" style={{"width":"16px","height":"16px"}} /><div data-v-b2745a4d className="text-xs hidden group-hover:block">Items / Skins</div></a><a data-v-b2745a4d href="/wowclassic-account" className="flex gap-1 items-center group"><img data-v-b2745a4d className="object-contain" src="/img/icons/account-icon-white.svg" loading="lazy" format="webp" fit="contain" style={{"width":"16px","height":"16px"}} /><div data-v-b2745a4d className="text-xs hidden group-hover:block">Accounts</div></a></div>{/**/}{/**/}
                         </div>
                       </div>
                     </div>

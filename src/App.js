@@ -16,6 +16,7 @@ import MyOffers from './components/dashboard/myOffers';
 import Accounts from './components/dashboard/account';
 import Items from './components/itemsContent/items';
 import Authsuccess from './components/authsuccess';
+import Wallet from './components/dashboard/wallet';
 
 
 function App() {
@@ -257,15 +258,23 @@ function App() {
             <Header  ref={searchComponent}/>
             <Routes>
         <Route path="/" >
-          <Route index element={<Home focusSearch={() => {
+          <Route index element={<Home 
+
+          sign={() => {
+            searchComponent.current.OpenLoginModal()
+          }}
+          focusSearch={() => {
             searchComponent.current.focusSearch()
           }}/>} />
           <Route path="/items/:gameName" element={<Items />} />
           <Route path="/dashboard/create-offer" element={<CreateOffer />} />
-          <Route path="/product/:offerId" element={<Product  sign={() => {
+          <Route path="/product/:offerId" element={<Product  
+          sign={() => {
             searchComponent.current.OpenLoginModal()
-          }} />} />
+          }}
+           />} />
           <Route path="/dashboard/offers" element={<MyOffers />} />
+          <Route path="/dashboard/wallet" element={<Wallet />} />
           <Route path="/dashboard/account" element={<Accounts />} />
           <Route path="/authsuccess/:token" element={<Authsuccess />} />
         </Route>

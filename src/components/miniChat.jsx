@@ -36,12 +36,14 @@ const goToChat = (responder,chatID) => {
                    console.log(chatID)
                    if(snapshot.val()) {
                    setChatMessages([...Object.values(snapshot.val())])
+                   }else{
+
+                   setChatMessages([])
                    }
                  })
 
 }
-
-
+console.log((props.data))
   return (
     <>
    <div data-overlayscrollbars-initialize className="sm:right-0 top-20 rounded-lg absoluti" style={{"background":"rgb(42, 46, 60)","box-shadow":"rgba(0, 0, 0, 0.3) 0px 4px 34px","width":"400px","margin-left":"-200px","max-width":"80%","position":"absolute !important"}} data-overlayscrollbars="host">
@@ -70,14 +72,14 @@ const goToChat = (responder,chatID) => {
     </div>
     <div className="w-full bg-white/10 h-0.5" />
     <div style={{"height":"500px"}}>
-      <div className="flex flex-col justify-center items-center even:bg-white/5 even:border-b even:border-t border-white/10 hover:bg-white/10">
        
        
        {
          props.data.map(msg => {
-             if(msg.seen !== false && msg.seen !== true) {
+             if(msg.seen !== false && msg.seen !== true && msg.userInfo._id !== props.currentUserId) {
 
              return (
+      <div className="flex flex-col justify-center items-center even:bg-white/5 even:border-b even:border-t border-white/10 hover:bg-white/10">
             <div className="px-4 py-3 flex items-center gap-2 w-full cursor-pointer" onClick={() => {
                 goToChat(msg.userInfo,msg.chatID)
             }}>
@@ -100,6 +102,7 @@ const goToChat = (responder,chatID) => {
                 </div>
             </div>
             </div>
+      </div>
              )
              }
          })
@@ -109,7 +112,6 @@ const goToChat = (responder,chatID) => {
 
 
         
-      </div>
     </div>
   </div>
   <div className="os-scrollbar os-scrollbar-horizontal os-theme-dark os-scrollbar-handle-interactive os-scrollbar-cornerless os-scrollbar-unusable">
