@@ -38,6 +38,7 @@ import { useMediaQuery } from 'react-responsive';
 import { get, ref as firebaseRef,push,set, onValue} from "firebase/database";
 import {db} from "../firebaseConfig.js"
 import MiniChat from './miniChat';
+import MobileChat from './mobileChat';
 
 
 const Header = forwardRef((props,ref) => {
@@ -649,53 +650,13 @@ const CloseChat = () => {
        setConntectionMobile(false)
       },100)
     }}>
-              <div data-overlayscrollbars-initialize className="sm:right-0 top-20 rounded-lg absolutiiiBliad" style={{"background":"rgb(42, 46, 60)",
-              marginRight:20,
-              "box-shadow":"rgba(0, 0, 0, 0.3) 0px 4px 34px","width":"400px","margin-left":"-200px","max-width":"80%","position":"absolute !important"}} data-overlayscrollbars="host">
-        <div className="os-size-observer os-size-observer-appear">
-          <div className="os-size-observer-listener ltr" />
-        </div>
-        <div className="os-viewport os-viewport-scrollbar-hidden" style={{"margin-right":"0px","margin-bottom":"0px","margin-left":"0px","top":"0px","right":"auto","left":"0px","width":"calc(100% + 0px)","padding":"0px"}}>
-          <div className="w-full px-4 py-3 flex items-center justify-between">
-            <div className="font-bold">Connections</div>
-            <div className="text-xs opacity-30 cursor-pointer">Mark all as read</div>
-          </div>
-          <div className="w-full bg-white/10 h-0.5" />
-          <div style={{"height":"500px"}}>
-            <div className="flex flex-col justify-center items-center even:bg-white/5 even:border-b even:border-t border-white/10 hover:bg-white/10">
-              <div className="px-4 py-3 flex items-center gap-2 w-full cursor-pointer">
-                <div className="shrink-0">
-                  <img src="https://assets.igitems.com/files/vt38WqDnEGpiAtLAbx4azek2cejfe94t.png" format="webp" loading="lazy" style={{"width":"36px","height":"36px","border-radius":"100%","border":"3px solid rgba(255, 255, 255, 0.12)"}} />
-                </div>
-                <div className="w-full">
-                  <div className="float-left">
-                    <div className="relative flex h-2 w-2 mt-2 mr-1 float-left">
-                      <div className="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75" />
-                      <div className="relative inline-flex rounded-full h-2 w-2 bg-secondary" />
-                    </div>
-                    <div className="float-left mr-1">(3)</div>
-                  </div>
-                  <div>d</div>
-                  <div className="flex justify-between w-full mt-1">
-                    <div className="text-xs font-thin opacity-70">kamila kamila</div>
-                    <div className="text-xs font-thin opacity-70">3 days ago</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="os-scrollbar os-scrollbar-horizontal os-theme-dark os-scrollbar-handle-interactive os-scrollbar-cornerless os-scrollbar-unusable">
-          <div className="os-scrollbar-track">
-            <div className="os-scrollbar-handle" style={{"width":"100%"}} />
-          </div>
-        </div>
-        <div className="os-scrollbar os-scrollbar-vertical os-theme-dark os-scrollbar-handle-interactive os-scrollbar-cornerless os-scrollbar-unusable">
-          <div className="os-scrollbar-track">
-            <div className="os-scrollbar-handle" style={{"height":"100%"}} />
-          </div>
-        </div>
-      </div>
+           <MobileChat   
+                 goToChat={() => {
+                    
+                  }}
+                  currentUserId={auth()._id}
+                  data={ChatData}
+                />
        </HandleOutsideClick>
         )
       }

@@ -1,4 +1,4 @@
-let Dev = false
+let Dev = true
 let API;
 if(Dev) {
 API = "http://localhost:5000"

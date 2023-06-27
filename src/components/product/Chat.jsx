@@ -37,7 +37,8 @@ const SendMsg = () => {
        onClick={() =>{
           props.backClick()
        }}
-       className="p-3 right-0 flex items-center justify-center border-2 rounded-full duration-500 cursor-pointer border-white/10 hover:border-yellow absolute" style={{"top":"13px","right":"10px"}}>
+       className="p-3 right-0 flex items-center justify-center border-2 rounded-full duration-500 cursor-pointer border-white/10 hover:border-yellow absolute" 
+       style={{"top":"13px","right":"10px",zIndex:999}}>
         <svg width={17} height={17} viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M15.8136 2.3135C16.203 1.92188 16.2013 1.28872 15.8096 0.899297C15.418 0.509873 14.7848 0.511655 14.3954 0.903276L15.8136 2.3135ZM0.905287 14.4695C0.515863 14.8612 0.517644 15.4943 0.909265 15.8837C1.30089 16.2732 1.93405 16.2714 2.32347 15.8798L0.905287 14.4695ZM14.3954 0.903276L0.905287 14.4695L2.32347 15.8798L15.8136 2.3135L14.3954 0.903276Z" fill="white" />
           <path d="M14.9209 15.1748C10.0708 10.3247 1.43079 1.60849 1.43079 1.60849" stroke="white" strokeWidth={2} strokeLinecap="round" />
@@ -45,7 +46,11 @@ const SendMsg = () => {
       </div>
       <div data-v-5d55811e>
         <div data-v-5d55811e>
-          <div data-v-5d55811e className="p-2 py-4 w-full flex justify-between items-center" style={{"border-radius":"10px 10px 0px 0px","background":"rgb(24, 33, 56)"}}>
+          <div data-v-5d55811e className="p-2 py-4 w-full flex justify-between items-center"
+
+           style={{"border-radius":"10px 10px 0px 0px",position:'absolute',zIndex:99,
+           background:"rgb(24, 33, 56)"
+          }}>
             <div data-v-5d55811e className="text-white">
               <div data-v-5d55811e className="flex items-center gap-2">
                 <img data-v-5d55811e  
@@ -68,7 +73,9 @@ const SendMsg = () => {
               <div className="os-size-observer os-size-observer-appear">
                 <div className="os-size-observer-listener ltr" />
               </div>
-              <div className="os-viewport os-viewport-scrollbar-hidden" style={{"margin-right":"0px","margin-bottom":"-32px","margin-left":"0px","top":"-16px","right":"auto","left":"0px","width":"calc(100% + 0px)","padding":"16px 0px","overflow-y":"scroll"}}>
+              <div className="os-viewport os-viewport-scrollbar-hidden" style={{"margin-right":"0px",
+              paddingTop:"80px",
+              "margin-bottom":"-32px","margin-left":"0px","top":"-16px","right":"auto","left":"0px","width":"calc(100% + 0px)","padding":"16px 0px","overflow-y":"scroll"}}>
                 <div data-v-5d55811e className="text-center flex flex-col items-center mb-2">
                   <div data-v-5d55811e className="font-bold text-secondary mb-4">Help Us Protect You</div>
                   <div data-v-5d55811e className="text-sm max-w-lg px-4 text-white/70">It is strictly prohibited to share social media and payment information, including Discord, Skype, Instagram, PayPal etc. Doing so will void the protection offered by  AutoMMservice for both parties involved.</div>
@@ -100,7 +107,9 @@ const SendMsg = () => {
                     {/**/}
                     {
                         !msg.me && (
-                            <img data-v-5d55811e src="https://assets.igitems.com/files/PYo8eaN7sGBGD4YDM9fZHpHtvtk9DuGh.png" format="webp" loading="lazy" style={{"height":"40px","width":"40px","border-radius":"100%","border":"3px solid rgba(255, 255, 255, 0.12)","margin":"0px 5px"}} />
+                            <img data-v-5d55811e  format="webp" loading="lazy" style={{"height":"40px","width":"40px","border-radius":"100%","border":"3px solid rgba(255, 255, 255, 0.12)","margin":"0px 5px"}}
+                src={API+"/user/userphoto?id=" + props.meta.id}
+							/>
                         )
                     }
                 </div>

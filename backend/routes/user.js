@@ -266,6 +266,7 @@ router.get('/userphoto',async (req, res) => {
 
 
 router.get('/product/:offerId',async (req, res) => {
+	  try {
   if (req.params.offerId.match(/^[0-9a-fA-F]{24}$/)) {
     // Yes, it's a valid ObjectId, proceed with `findById` call.
   Offer.findOne({_id:req.params.offerId}).populate("PostedBy").then((doc,err) => {
@@ -276,6 +277,8 @@ router.get('/product/:offerId',async (req, res) => {
   res.send("not found")
 }
 
+	  }catch(e) {
+	  }
 })
 
 

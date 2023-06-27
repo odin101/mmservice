@@ -1,17 +1,24 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import NoResult from '../../img/icons/no-search-results'
 import 'react-responsive-modal/styles.css';
 import { Modal } from 'react-responsive-modal';
 import './wallet.css'
 import CurrencyInput from 'react-currency-input-field';
-
+import API from '../../config.js'
+import axios from 'axios'
 import Select from 'react-select'
+import {useAuthUser} from 'react-auth-kit'
+
 
 export default function Wallet() {
     const [open, setOpen] = useState(false);
     const [payoutMethod, setPayoutMethod] = useState("Paypal");
     const onOpenModal = () => setOpen(true);
     const onCloseModal = () => setOpen(false);
+	const [gotData,setGotData] = useState(false)
+
+  const auth = useAuthUser()
+
   return (
     <>
     <div>
@@ -29,7 +36,7 @@ export default function Wallet() {
           <div className="flex justify-between items-center q-px-sm gap-4">
             <div className="flex flex-col gap-2">
               <div className="text-md font-weight-light">Available</div>
-              <div className="font-bold text-3xl">$0.00</div>
+              <div className="font-bold text-3xl">${auth()?.wallet?(auth().wallet):('0,00')}</div>
             </div>
             <div className="flex flex-col gap-2">
               <div className="text-xs font-weight-light">Pending</div>

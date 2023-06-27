@@ -19,7 +19,7 @@ export default function MiniChat(props) {
   const sendMessage = (msg) => {
     push(ref(db, "chatIds/"+chatId), {
         msg:msg,
-        sender:auth()._id,
+        sender:auth()?._id,
       })
       set(ref(db, "users/"+meta.id+"/seen"),{
        seen:false
@@ -30,7 +30,7 @@ export default function MiniChat(props) {
 const goToChat = (responder,chatID) => {
     setChatModal(true)
     setChatId(chatID)
-    setMetaData({...{id:responder._id, name:responder.username}})
+    setMetaData({...{id:responder?._id, name:responder.username}})
              const chatQuery = ref(db, "chatIds/"+chatID);
              onValue(chatQuery,(snapshot) => {
                    console.log(chatID)
@@ -52,7 +52,7 @@ console.log((props.data))
                 <Chat 
                     meta={meta}
                     chatData={chatMessages}
-                    myid={auth()._id}
+                    myid={auth()?._id}
                     onSendMSG={(m) => {
                             sendMessage(m)
                     }}
@@ -76,15 +76,20 @@ console.log((props.data))
        
        {
          props.data.map(msg => {
-             if(msg.seen !== false && msg.seen !== true && msg.userInfo._id !== props.currentUserId) {
+          if(msg.userInfo) {
+             if(msg.seen !== false && msg.seen !== true && msg.userInfo?._id !== props.currentUserId) {
 
              return (
       <div className="flex flex-col justify-center items-center even:bg-white/5 even:border-b even:border-t border-white/10 hover:bg-white/10">
-            <div className="px-4 py-3 flex items-center gap-2 w-full cursor-pointer" onClick={() => {
+            <div className="px-4 py-3 flex items-center gap-2 w-full cursor-pointer" 
+            onClick={() => {
                 goToChat(msg.userInfo,msg.chatID)
-            }}>
+            }}
+            >
             <div className="shrink-0">
-                <img src={API+"/user/userphoto?id=" + msg.userInfo._id} format="webp" loading="lazy" style={{"width":"36px","height":"36px","border-radius":"100%","border":"3px solid rgba(255, 255, 255, 0.12)"}} />
+                <img 
+                src={API+"/user/userphoto?id=" + msg.userInfo?._id} 
+                format="webp" loading="lazy" style={{"width":"36px","height":"36px","border-radius":"100%","border":"3px solid rgba(255, 255, 255, 0.12)"}} />
             </div>
             <div className="w-full">
                 <div className="float-left">
@@ -92,11 +97,11 @@ console.log((props.data))
                     <div className="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75" />
                     <div className="relative inline-flex rounded-full h-2 w-2 bg-secondary" />
                 </div>
-                <div className="float-left mr-1">{msg.userInfo.username} </div>
+                <div className="float-left mr-1">{msg.userInfo?.username} </div>
                 </div>
                 <div>sent You message</div>
                 <div className="flex justify-between w-full mt-1">
-                <div className="text-xs font-thin opacity-70">{msg.userInfo.email}</div>
+                <div className="text-xs font-thin opacity-70">{msg.userInfo?.email}</div>
                 {/* <div className="text-xs font-thin opacity-70">10 days ago</div> */}
 
                 </div>
@@ -105,7 +110,9 @@ console.log((props.data))
       </div>
              )
              }
+            }
          })
+
        }
 
 

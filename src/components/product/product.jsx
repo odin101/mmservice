@@ -62,12 +62,18 @@ export default function Product(props) {
     !chatModal && (document.body.style.overflow = 'unset')
  }, [chatModal ]);
    useEffect(() => {
+
     if(!gotData) {
+
+
       axios.get(API + "/user/product/"+offerId)
       .then(res => {
         setGameData(res.data)
         setGotData(true)
+		  console.log(res.data)
       })
+
+
     }
 
     if(gotData) {
@@ -89,7 +95,7 @@ export default function Product(props) {
               })  
             }else{
                 setChatId(data.chatID)
-                setMetaData({...{name:gameData?.PostedBy.username,id:gameData?.PostedBy?._id}})
+                setMetaData({...{name:gameData?.PostedBy?.username,id:gameData?.PostedBy?._id}})
                const chatQuery = ref(db, "chatIds/"+data.chatID);
                onValue(chatQuery,(snapshot) => {
                      console.log((snapshot.val()))
@@ -131,7 +137,9 @@ const sendMessage = (msg) => {
     {
    !gotData && (<Loader />)
     }
-    { Buying && <Checkout gameData={gameData} />  }
+    { Buying && <Checkout 
+closeCheckout={() => {setBuying(false)} }
+		API={API} auth={auth} gameData={gameData} />  }
         <PhotoProvider>
 
     <div data-v-bfa0d376>

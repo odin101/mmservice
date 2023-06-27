@@ -2,8 +2,15 @@ import React from 'react';
 import timerIcon from '../../img/icons/timer.svg'
 import MissingImg from '../../img/icons/missingImg.webp'
 import BlurImageLoader from 'react-blur-image-loader';
+import ImageLoader from 'react-loading-image';
+import SpinnerGIF from "../../img/spinner.gif"
 
 export default function SingleItem(props) {
+function Preloader(props) {
+  return <img src={SpinnerGIF} 
+	   style={{height:80,width:120,objectFit:'cover'}}
+		/>;
+}
   return (
     <>
                           <div
@@ -41,17 +48,20 @@ export default function SingleItem(props) {
                                       }}
                                       data-v-530e65a0=""
                                     >
-                                       <img
-                                        src={props.data.Image?props.data.Image+"_100x100":MissingImg}
-                                        style={{}}
+					 <ImageLoader
+
                                         format="webp"
                                         loading="lazy"
                                         fit="cover"
                                         position="center"
                                         height={80}
                                         width={80}
-                                        data-v-530e65a0=""
-                                      /> 
+	                              style={{width:80,height:80,objectFit:'cover'}}
+								  src={props.data.Image?props.data.Image+"_100x100":MissingImg}
+								  loading={() => <Preloader />}
+								  error={() => <div>Error</div>}
+								  />
+
 
                                     </div>
                                     {/**/}
@@ -60,15 +70,6 @@ export default function SingleItem(props) {
                                       style={{ height: 70 }}
                                       data-v-530e65a0=""
                                     >
-                                      <img
-                                        className="float-left mt-1 mr-1"
-                                        src="/img/limited-stock.gif"
-                                        style={{ width: 14 }}
-                                        alt=""
-                                        width={14}
-                                        height={14}
-                                        data-v-530e65a0=""
-                                      />
                                       <div
                                         className="float-none"
                                         data-v-530e65a0=""
@@ -144,6 +145,7 @@ export default function SingleItem(props) {
                                         data-v-530e65a0=""
                                       >
                                         {/**/}
+
                                         <img
                                          src={props.data.PostedBy?.profileImage?props.data.PostedBy.profileImage:MissingImg }
                                           style={{
@@ -160,6 +162,7 @@ export default function SingleItem(props) {
                                           alt="Roblox Store"
                                           data-v-530e65a0=""
                                         />
+
                                       </div>
                                       <div
                                         className="flex flex-col"

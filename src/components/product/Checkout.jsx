@@ -3,6 +3,7 @@ import PaypalIcon from '../../img/icons/paypal.png'
 import CryptoIcon from '../../img/icons/crypto.png'
 import ClockIcon from '../../img/icons/clock.svg'
 import axios from 'axios'
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
 import CoinbaseCommerceButton from 'react-coinbase-commerce';
 import 'react-coinbase-commerce/dist/coinbase-commerce-button.css';
@@ -44,6 +45,23 @@ axios.post("https://api.commerce.coinbase.com/checkouts",{
   
 },[])
 
+
+	const createOrder = (data, actions) => {
+        return actions.order.create({
+            purchase_units: [
+                {
+                    description: "Sunflower",
+                    amount: {
+                        currency_code: "USD",
+                        value: props.gameData?.price,
+                    },
+                },
+            ],
+        }).then((orderID) => {
+               // setOrderID(orderID);
+                return orderID;
+            });
+    };
  
 
 
@@ -56,7 +74,9 @@ axios.post("https://api.commerce.coinbase.com/checkouts",{
         <div data-v-299c9395 className="container flex items-center h-20 sm:h-16">
    
           <div data-v-299c9395 className="grow" />
-          <div data-v-1fb46fc5 data-v-299c9395 className="btn text-center cursor-pointer secondary font-bold cursor-pointer" style={{"padding":"5px 14px","font-size":"14px"}}>Back</div>
+          <div data-v-1fb46fc5 data-v-299c9395 
+	  onClick={() => props.closeCheckout()}
+	  className="btn text-center cursor-pointer secondary font-bold cursor-pointer" style={{"padding":"5px 14px","font-size":"14px"}}>Back</div>
         </div>
       </div>
       <div data-v-299c9395 style={{"background":"rgb(13, 18, 38)"}}>
@@ -181,7 +201,21 @@ axios.post("https://api.commerce.coinbase.com/checkouts",{
             
             {
               PaymentType == 1 && (
-            <div onClick={() => {buttonRef.current.click()}} data-v-1fb46fc5 data-v-299c9395 className="btn text-center cursor-pointer mb-2 flex items-center justify-center" style={{"border-radius":"4px","height":"40px"}}>Pay ${props.gameData?.price}</div>
+				  <>
+ <PayPalScriptProvider options={{ clientId: "AYC6MlzAwLqkB6gpj0nW5p3-5IHR3EBiyyutlev71M1NgaZwaU1PWDlK_vveJ4Xiv-EboxMjwtTQjwMI" }}>
+            <PayPalButtons style={{ layout: "vertical" }}
+				      createOrder={createOrder}
+                        onApprove={() => {
+
+							alert('payment success')
+						}}
+				  />
+        </PayPalScriptProvider>
+				  {
+            /* <div onClick={() => {buttonRef.current.click()}} data-v-1fb46fc5 data-v-299c9395 className="btn text-center cursor-pointer mb-2 flex items-center justify-center" style={{"border-radius":"4px","height":"40px"}}>Pay ${props.gameData?.price}</div>
+				  */
+				  }
+				  </>
               )
             }
 
@@ -198,7 +232,23 @@ axios.post("https://api.commerce.coinbase.com/checkouts",{
                   fontSize:'16px',
                   fontWeight:'700'
                 }}
+     onChargeSuccess={() => {
+            axios.post(props.API + "/user/paymentsucess",{
+				sellerId:props.gameData.PostedBy._id,
+                amount:props.gameData?.price,
+            },{
+          headers:{
+            'Authorization':props.auth().token
+          } 
+			}).then(rr => {
+               console.log(rr)
+			})
+	 }}
+
+
+
             checkoutId={checkoutID}>
+
              Pay ${props.gameData?.price}
               </CoinbaseCommerceButton>
               )
